@@ -1,0 +1,39 @@
+﻿<Page x:Class="DepartmentsRepository_WPF.PageAddEmploye"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DepartmentsRepository_WPF"
+      mc:Ignorable="d" 
+      d:DesignHeight="400" d:DesignWidth="400"
+      Title="PageAddEmploye">
+    <Grid>
+        <GroupBox Header="Employe add-on window" Margin="10" Padding="10">
+            <StackPanel>
+                <TextBlock>Write new employe Firstname:</TextBlock>
+                <TextBox x:Name="tbEmployeFirstName"/>
+                <TextBlock>Write new employe Lastname:</TextBlock>
+                <TextBox x:Name="tbEmployeLastName"/>
+                <WrapPanel Orientation="Horizontal">
+                    <TextBlock Margin="0 10 10 10">Select Date of birth:</TextBlock>
+                    <Button Width="50" Height="20" Click="Button_Click" >Calendar</Button>
+                </WrapPanel>
+                <TextBlock>
+                    <TextBlock.Text>Select the department to which the new employee will be added:</TextBlock.Text>
+                </TextBlock>
+                <ComboBox x:Name="cbDepartments">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock x:Name="tbDepartments" Text="{Binding DepartmentName}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <TextBlock Text="Select Attribute employe:"/>
+                <ComboBox x:Name="cbAttribute" />
+
+
+                <Button Margin="0,20" Click="Button_Click_1">Add Employe</Button>
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</Page>
