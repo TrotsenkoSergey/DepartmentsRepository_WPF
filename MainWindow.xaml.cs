@@ -26,6 +26,7 @@ namespace DepartmentsRepository_WPF
         public MainWindow()
         {
             InitializeComponent();
+            
         }
                 
         private void CreateDepartment_Click(object sender, RoutedEventArgs e)
@@ -60,15 +61,15 @@ namespace DepartmentsRepository_WPF
         private void RemoveDepartment_Click(object sender, RoutedEventArgs e)
         {
             if (trvDepartments.SelectedItem is Department && (trvDepartments.SelectedItem as Department != this.departmentsRepository.FirstDepartment))
-            {
+        {
                 MessageBoxResult messageBoxResult = MessageBox.Show($"Are you sure to remove '{(trvDepartments.SelectedItem as Department).DepartmentName}' department?", 
                     "Warning message", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                 if (messageBoxResult == MessageBoxResult.Yes)
-                {
-                    this.departmentsRepository.GetDepartmentAncestor(trvDepartments.SelectedItem as Department, this.departmentsRepository.FirstDepartment).
-                      Departments.Remove(trvDepartments.SelectedItem as Department);
-                }
+            {
+                this.departmentsRepository.GetDepartmentAncestor(trvDepartments.SelectedItem as Department, this.departmentsRepository.FirstDepartment).
+                    Departments.Remove(trvDepartments.SelectedItem as Department);
+            }
             }
             else if (trvDepartments.SelectedItem is Department && (trvDepartments.SelectedItem as Department == this.departmentsRepository.FirstDepartment))
             {

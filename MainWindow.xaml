@@ -45,15 +45,16 @@
         </WrapPanel>
 
         <TreeView Name="trvDepartments" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Margin="5" SelectedItemChanged="trvDepartments_SelectedItemChanged" >
-            <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type local:DepartmentsRepository}" ItemsSource="{Binding Departments}" >
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type local:DepartmentsRepository}" ItemsSource="{Binding Departments}" >
                     <WrapPanel>
                         <TextBlock Text="{Binding DepartmentName}" FontWeight="Bold" />
                         <TextBlock Text=", Count of employes: "/>
                         <TextBlock Text="{Binding Employes.Count}"/>
                     </WrapPanel>
                 </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
+                </TreeView.ItemTemplate>
+           
         </TreeView>
 
         <ListView x:Name="lvEmployes" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="5" ItemsSource="{Binding Employes}">

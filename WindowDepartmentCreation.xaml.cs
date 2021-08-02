@@ -37,16 +37,16 @@ namespace DepartmentsRepository_WPF
         {
             if (this.departmentsRepository.IsCorrectName(tbDepName.Text))
             {
-                if (this.departmentsRepository.FirstDepartment == null)
-                {
+            if (this.departmentsRepository.FirstDepartment == null)
+            { 
                     departmentsRepository.CreateFirstDepartment(tbDepName.Text);
-                }
-                else
-                {
-                    departmentsRepository.CreateNewDepartment(tbDepName.Text, cbWinDep.SelectedItem as Department);
-                }
-                Close();
             }
+            else
+            {
+                    departmentsRepository.CreateNewDepartment(tbDepName.Text, cbWinDep.SelectedItem as Department);
+            }
+            Close();
+        }
             else
             {
                 MessageBox.Show(DepartmentsRepository.INVALID_NAME);
