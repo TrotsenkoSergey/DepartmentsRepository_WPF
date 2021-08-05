@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DepartmentsRepository_WPF"
         mc:Ignorable="d"
-        Title="DepartmentsApp" Height="450" Width="900" WindowStartupLocation="CenterScreen">
+        Title="DepartmentsApp" Height="450" Width="950" WindowStartupLocation="CenterScreen">
+   
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="27*"/>
@@ -46,7 +47,7 @@
 
         <TreeView Name="trvDepartments" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Margin="5" SelectedItemChanged="trvDepartments_SelectedItemChanged" >
                 <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate DataType="{x:Type local:DepartmentsRepository}" ItemsSource="{Binding Departments}" >
+                <HierarchicalDataTemplate DataType="{x:Type local:DepartmentsRepository}" ItemsSource="{Binding Departments}" >
                     <WrapPanel>
                         <TextBlock Text="{Binding DepartmentName}" FontWeight="Bold" />
                         <TextBlock Text=", Count of employes: "/>
@@ -65,9 +66,9 @@
                             <GridViewColumnHeader Tag="CreationTime">Time of admission</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="120" DisplayMemberBinding="{Binding LastName}">
+                    <GridViewColumn Width="120" DisplayMemberBinding="{Binding FullName, UpdateSourceTrigger=PropertyChanged}">
                         <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="Name">Name</GridViewColumnHeader>
+                            <GridViewColumnHeader Tag="Name" Click="GridViewColumnHeaderName_Click">Name</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
                     <GridViewColumn Width="80" DisplayMemberBinding="{Binding DateOfBirth}">
@@ -87,7 +88,7 @@
                     </GridViewColumn>
                     <GridViewColumn Width="80" DisplayMemberBinding="{Binding Salary}">
                         <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="Salary">Salary</GridViewColumnHeader>
+                            <GridViewColumnHeader Tag="Salary" Click="GridViewColumnHeaderSalary_Click">Salary</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
                 </GridView>

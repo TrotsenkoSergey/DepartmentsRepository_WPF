@@ -25,10 +25,9 @@ namespace DepartmentsRepository_WPF
         {
             InitializeComponent();
             this.departmentsRepository = departmentsRepository;
-            PageAddEmploye pageAddEmploye = new PageAddEmploye(this.departmentsRepository, this);
+            PageAddEmploye pageAddEmploye = new PageAddEmploye(departmentsRepository, this);
             this.pageAddEmploye = pageAddEmploye;
             Frame.Content = pageAddEmploye;
-            
         }
 
        

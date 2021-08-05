@@ -58,7 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Attribute.cs" />
+    <Compile Include="Employe\Attribute.cs" />
     <Compile Include="Department.cs" />
     <Compile Include="DepartmentsRepository.cs" />
     <Compile Include="PageAddEmploye.xaml.cs">
@@ -76,7 +76,7 @@
     <Compile Include="WindowEmployeAdd.xaml.cs">
       <DependentUpon>WindowEmployeAdd.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Worker.cs" />
+    <Compile Include="Employe\Worker.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -85,7 +85,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Employe.cs" />
+    <Compile Include="Employe\Employe.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -112,7 +112,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Manager.cs" />
+    <Compile Include="Employe\Manager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

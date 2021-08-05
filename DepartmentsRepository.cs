@@ -35,7 +35,7 @@ namespace DepartmentsRepository_WPF
         private void Load(string path)
         {
             string json = File.ReadAllText(path);
-            var departmentsRepository = JsonConvert.DeserializeObject<DepartmentsRepository>(path);
+            var departmentsRepository = JsonConvert.DeserializeObject<DepartmentsRepository>(json);
             //this.Departments = departmentsRepository.Departments;
             //this.Employes = departmentsRepository.Employes;
         }
@@ -45,17 +45,7 @@ namespace DepartmentsRepository_WPF
             string json = JsonConvert.SerializeObject(departmentsRepository);
             File.WriteAllText(path, json);
         }
-
-        public void CreateNewEmploye(string firstName, string lastName, DateTime dateOfBirth, EmployeAttribute attribute, Department department)
-        {
-            //int count = Employes.Count;
-
-            //if ((int)attribute <= 2) this.Employes.Add(new Manager(firstName, lastName, dateOfBirth, attribute, department));
-            //else this.Employes.Add(new Worker(firstName, lastName, dateOfBirth, attribute, department));
-
-            //department.Employes.Add(Employes[count]);
-        }
-
+                
         public void CreateFirstDepartment(string departmentName)
         {
             //this.Departments.Add(new Department(departmentName));
@@ -66,12 +56,6 @@ namespace DepartmentsRepository_WPF
 
         public void CreateNewDepartment(string departmentName, Department department)
         {
-            //int count = Departments.Count;
-
-            //this.Departments.Add(new Department(departmentName));
-
-            //department.Departments.Add(Departments[count]);
-
             department.Departments.Add(new Department(departmentName));
         }
 

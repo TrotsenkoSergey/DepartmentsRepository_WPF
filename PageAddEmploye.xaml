@@ -16,7 +16,7 @@
                 <TextBox x:Name="tbEmployeLastName"/>
                 <WrapPanel Orientation="Horizontal">
                     <TextBlock Margin="0 10 10 10">Select Date of birth:</TextBlock>
-                    <Button Width="50" Height="20" Click="Button_Click" >Calendar</Button>
+                    <Button Width="50" Height="20" Click="Button_Calendar" >Calendar</Button>
                 </WrapPanel>
                 <TextBlock>
                     <TextBlock.Text>Select the department to which the new employee will be added:</TextBlock.Text>
@@ -32,7 +32,7 @@
                 <ComboBox x:Name="cbAttribute" />
 
 
-                <Button Margin="0,20" Click="Button_Click_1">Add Employe</Button>
+                <Button Margin="0,20" Click="Button_AddEmploye">Add Employe</Button>
             </StackPanel>
         </GroupBox>
     </Grid>

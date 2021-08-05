@@ -83,15 +83,27 @@ namespace DepartmentsRepository_WPF
 
         private void AddEmploye_Click(object sender, RoutedEventArgs e)
         {
-            if (this.departmentsRepository != null)
+            if (this.departmentsRepository == null)
+            {
+                MessageBox.Show("You must create a Main Department, then you can add an employee.");
+            }
+            else if (departmentsRepository.FirstDepartment.GetDirector(departmentsRepository.FirstDepartment) == null ||
+                departmentsRepository.FirstDepartment.GetDeputyDirector(departmentsRepository.FirstDepartment) == null)
             {
                 Window windowEmployeAdd = new WindowEmployeAdd(this.departmentsRepository);
                 windowEmployeAdd.Owner = this;
                 windowEmployeAdd.ShowDialog();
             }
-            else
+            else if (this.departmentsRepository.FirstDepartment.Departments.Count == 0)
             {
-                MessageBox.Show("You must create at least one department to which you can add an employee.");
+                MessageBox.Show("You must create the next department dimension to which you can add an employee " +
+                    "(excluding the director and his deputy).");
+            }
+            else 
+            {
+                Window windowEmployeAdd = new WindowEmployeAdd(this.departmentsRepository);
+                windowEmployeAdd.Owner = this;
+                windowEmployeAdd.ShowDialog();
             }
         }
 
@@ -102,5 +114,24 @@ namespace DepartmentsRepository_WPF
                 lvEmployes.ItemsSource = (trvDepartments.SelectedItem as Department).Employes;
             }
         }
+
+        private void GridViewColumnHeaderName_Click(object sender, RoutedEventArgs e)
+        {
+            if (trvDepartments.SelectedItem is Department)
+            {
+                (trvDepartments.SelectedItem as Department).SortEmployeByLastName(trvDepartments.SelectedItem as Department);
+                lvEmployes.ItemsSource = (trvDepartments.SelectedItem as Department).Employes;
+            }
+        }
+
+        private void GridViewColumnHeaderSalary_Click(object sender, RoutedEventArgs e)
+        {
+            if (trvDepartments.SelectedItem is Department)
+            {
+                (trvDepartments.SelectedItem as Department).SortEmployeBySalary(trvDepartments.SelectedItem as Department);
+                lvEmployes.ItemsSource = (trvDepartments.SelectedItem as Department).Employes;
+            }
+        }
+
     }
 }

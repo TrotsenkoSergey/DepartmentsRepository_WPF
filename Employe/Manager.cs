@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DepartmentsRepository_WPF
 {
-    class Manager : Employe
+    public class Manager : Employe
     {
         private const double DIRECTOR_SALARY_RATIO = 0.15;
         private const double DIRECTOR_MIN_SALARY = 3000;
@@ -17,14 +17,23 @@ namespace DepartmentsRepository_WPF
         private const double HEAD_OF_DEPARTMENT_SALARY_RATIO = 0.15;
         private const double HEAD_OF_DEPARTMENT_MIN_SALARY = 1300;
 
-        public Manager(string firstName, string lastName, DateTime dateOfBirth, EmployeAttribute attribute, Department department)
-             : base(firstName, lastName, dateOfBirth, attribute, department)
+        public Manager(string firstName, string lastName, DateTime dateOfBirth, EmployeAttribute attribute, Department department, Department firstDepartment)
+             : base(firstName, lastName, dateOfBirth, attribute, department, firstDepartment)
         {
+            if (attribute == EmployeAttribute.Head_Of_Department)
+            {
+                department.GetDeputyDirector(firstDepartment).Salary = default;
+                department.GetDirector(firstDepartment).Salary = default;
+            }
         }
 
         public override double Salary
         {
             get
+            {               
+                return this.salary;
+            }
+            set 
             {
                 double salaryRatio = default;
                 double minSalary = default;
@@ -46,7 +55,9 @@ namespace DepartmentsRepository_WPF
                 }
 
                 double salary = GetSalaryOfEmployes(this.department) * salaryRatio;
-                return (salary < minSalary) ? minSalary : salary;
+                this.salary = (salary < minSalary) ? minSalary : salary;
+                
+                OnPropertyChanged(); // using Interface INotifyPropertyChanged
             }
         }
 
@@ -58,12 +69,12 @@ namespace DepartmentsRepository_WPF
 
             for (int i = 0; i < lengthOfDepartments; i++)
             {
-                salaryOfEmployes = +GetSalaryOfEmployes(department.Departments[i]);
+                salaryOfEmployes += GetSalaryOfEmployes(department.Departments[i]);
             }
 
             for (int j = 0; j < lengthOfEmloyes; j++)
             {
-                salaryOfEmployes = +department.Employes[j].Salary;
+                salaryOfEmployes += department.Employes[j].Salary; 
             }
             return salaryOfEmployes;
         }
