@@ -1,16 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace DepartmentsRepository_WPF
 {
@@ -20,16 +10,77 @@ namespace DepartmentsRepository_WPF
     public partial class WindowEmployeAdd : Window
     {
         DepartmentsRepository departmentsRepository;
-        PageAddEmploye pageAddEmploye;
         public WindowEmployeAdd(DepartmentsRepository departmentsRepository)
         {
             InitializeComponent();
             this.departmentsRepository = departmentsRepository;
-            PageAddEmploye pageAddEmploye = new PageAddEmploye(departmentsRepository, this);
-            this.pageAddEmploye = pageAddEmploye;
-            Frame.Content = pageAddEmploye;
+            ObservableCollection<Department> departments = new ObservableCollection<Department>();
+            ObservableCollection<EmployeAttribute> employeAttributes = new ObservableCollection<EmployeAttribute>();
+            // don't know how to get Enum easier ("Enum.GetValues(EmployeAttribute)" didnt work)
+            
+            if (departmentsRepository.FirstDepartment.GetDirector(departmentsRepository.FirstDepartment) == null ||
+                departmentsRepository.FirstDepartment.GetDeputyDirector(departmentsRepository.FirstDepartment) == null)
+            {
+                departments.Add(this.departmentsRepository.FirstDepartment);
+                cbDepartments.ItemsSource = departments;
+                cbDepartments.SelectedValue = this.departmentsRepository.FirstDepartment;
+
+                if (departmentsRepository.FirstDepartment.GetDirector(departmentsRepository.FirstDepartment) == null)
+                { employeAttributes.Add(EmployeAttribute.Director); }
+                else
+                { employeAttributes.Add(EmployeAttribute.Deputy_Director); }
+
+                cbAttribute.ItemsSource = employeAttributes;
+                cbAttribute.SelectedItem = employeAttributes[0];
+            }
+            else
+            {
+                departments = this.departmentsRepository.GetListOfDepartments(this.departmentsRepository.FirstDepartment);
+                departments.Remove(this.departmentsRepository.FirstDepartment);
+                cbDepartments.ItemsSource = departments;
+                cbDepartments.SelectedValue = departments[0];
+
+                employeAttributes.Add(EmployeAttribute.Head_Of_Department);
+                employeAttributes.Add(EmployeAttribute.Worker);
+                employeAttributes.Add(EmployeAttribute.Intern);
+
+                cbAttribute.ItemsSource = employeAttributes;
+                cbAttribute.SelectedItem = EmployeAttribute.Worker;
+            }
         }
 
-       
+        private void Button_AddEmploye(object sender, RoutedEventArgs e)
+        {
+            if (!(dpDatePicker.SelectedDate is DateTime) || 
+                !this.departmentsRepository.IsCorrectName(tbEmployeFirstName.Text) || !this.departmentsRepository.IsCorrectName(tbEmployeLastName.Text))
+            {
+                MessageBox.Show($"You must first fill out the form. \nOR \n{DepartmentsRepository.INVALID_NAME}");
+            }
+            else
+            {
+                if ((cbDepartments.SelectedValue as Department) != this.departmentsRepository.FirstDepartment &&
+                    (cbDepartments.SelectedValue as Department).GetHeadOfDepartment(cbDepartments.SelectedValue as Department) == null &&
+                    (EmployeAttribute)cbAttribute.SelectedValue != EmployeAttribute.Head_Of_Department)
+                {
+                    MessageBox.Show("You cannot add an worker or intern to a department while there is no Head in the department.");
+                }
+                else if ((cbDepartments.SelectedValue as Department) != this.departmentsRepository.FirstDepartment &&
+                    (cbDepartments.SelectedValue as Department).GetHeadOfDepartment(cbDepartments.SelectedValue as Department) != null &&
+                    (EmployeAttribute)cbAttribute.SelectedValue == EmployeAttribute.Head_Of_Department)
+                {
+                    MessageBox.Show("You cannot add second Head of department in one department.");
+                }
+                else
+                {
+                    (cbDepartments.SelectedValue as Department).AddEmploye(tbEmployeFirstName.Text,
+                            tbEmployeLastName.Text, (DateTime)dpDatePicker.SelectedDate,
+                            (EmployeAttribute)cbAttribute.SelectedValue, cbDepartments.SelectedValue as Department,
+                            this.departmentsRepository.FirstDepartment);
+                    Close();
+                }
+            }
+        }
+
+
     }
 }

@@ -1,11 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DepartmentsRepository_WPF
 {
@@ -66,9 +62,9 @@ namespace DepartmentsRepository_WPF
 
             for (int i = 0; i < length; i++)
             {
-                count = +GetCountOfEmployes(department.Departments[i]);
+                count += GetCountOfEmployes(department.Departments[i]);
             }
-            count = +department.Employes.Count;
+            count += department.Employes.Count;
 
             return count;
         }

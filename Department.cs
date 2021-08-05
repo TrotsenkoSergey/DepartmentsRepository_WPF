@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DepartmentsRepository_WPF
 {
@@ -64,6 +61,11 @@ namespace DepartmentsRepository_WPF
             else this.Employes.Add(new Worker(firstName, lastName, dateOfBirth, attribute, department, firstDepartment));
         }
 
+        public void RemoveEmploye(Employe concreteEmploye)
+        {
+            concreteEmploye.Department_.Employes.Remove(concreteEmploye);
+        }
+
         public Manager GetDirector(Department firstDepartment)
         {
             foreach (Employe employe in firstDepartment.Employes)
@@ -102,6 +104,16 @@ namespace DepartmentsRepository_WPF
         public void SortEmployeBySalary(Department department)
         {
             department.Employes = new ObservableCollection<Employe>(department.Employes.OrderBy(x => x.Salary));
+        }
+
+        public void SortEmployeByDateOfBirth(Department department)
+        {
+            department.Employes = new ObservableCollection<Employe>(department.Employes.OrderBy(x => x.DateOfBirth));
+        }
+
+        public void SortEmployeByCreationTime(Department department)
+        {
+            department.Employes = new ObservableCollection<Employe>(department.Employes.OrderBy(x => x.CreationTime));
         }
 
         // below, interface INotifyPropertyChanged implementation 
