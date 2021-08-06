@@ -35,7 +35,7 @@ namespace DepartmentsRepository_WPF
             }
             else
             {
-                departments = this.departmentsRepository.GetListOfDepartments(this.departmentsRepository.FirstDepartment);
+                departments = this.departmentsRepository.FirstDepartment.GetListOfDepartments(this.departmentsRepository.FirstDepartment);
                 departments.Remove(this.departmentsRepository.FirstDepartment);
                 cbDepartments.ItemsSource = departments;
                 cbDepartments.SelectedValue = departments[0];

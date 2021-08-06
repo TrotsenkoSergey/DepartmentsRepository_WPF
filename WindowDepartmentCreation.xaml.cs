@@ -15,7 +15,7 @@ namespace DepartmentsRepository_WPF
             this.departmentsRepository = departmentsRepository;
             if (this.departmentsRepository.FirstDepartment != null)
             {
-                cbWinDep.ItemsSource = this.departmentsRepository.GetListOfDepartments(this.departmentsRepository.FirstDepartment);
+                cbWinDep.ItemsSource = this.departmentsRepository.FirstDepartment.GetListOfDepartments(this.departmentsRepository.FirstDepartment);
                 cbWinDep.SelectedValue = this.departmentsRepository.FirstDepartment; /* for the convenience of the user
                                                                                       * and avoiding the exclusion of the absence
                                                                                       * of a choice of department for creating a new */

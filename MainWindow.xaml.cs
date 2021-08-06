@@ -13,22 +13,23 @@ namespace DepartmentsRepository_WPF
         public MainWindow()
         {
             InitializeComponent();
-
+            this.departmentsRepository = new DepartmentsRepository();
+            trvDepartments.ItemsSource = this.departmentsRepository.Departments;
         }
 
         private void CreateDepartment_Click(object sender, RoutedEventArgs e)
         {
-            if (this.departmentsRepository == null)
-            { this.departmentsRepository = new DepartmentsRepository(); }
+            //if (this.departmentsRepository == null)
+            //{ this.departmentsRepository = new DepartmentsRepository(); }
 
             Window windowDepartmentCreation = new WindowDepartmentCreation(this.departmentsRepository);
             windowDepartmentCreation.Owner = this;
             windowDepartmentCreation.ShowDialog();
 
-            if (trvDepartments.ItemsSource == null)
-            {
-                trvDepartments.ItemsSource = departmentsRepository.Departments;
-            }
+            //if (trvDepartments.ItemsSource == null)
+            //{
+            //    trvDepartments.ItemsSource = departmentsRepository.Departments;
+            //}
         }
 
         private void RenameDepartment_Click(object sender, RoutedEventArgs e)
@@ -54,7 +55,7 @@ namespace DepartmentsRepository_WPF
 
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
-                    this.departmentsRepository.GetDepartmentAncestor(trvDepartments.SelectedItem as Department, this.departmentsRepository.FirstDepartment).
+                    this.departmentsRepository.FirstDepartment.GetDepartmentAncestor(trvDepartments.SelectedItem as Department, this.departmentsRepository.FirstDepartment).
                         Departments.Remove(trvDepartments.SelectedItem as Department);
                 }
             }

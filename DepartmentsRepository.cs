@@ -19,7 +19,7 @@ namespace DepartmentsRepository_WPF
         public DepartmentsRepository()
         {
             //Employes = new ObservableCollection<Employe>();
-            //Departments = new ObservableCollection<Department>();
+            Departments = new ObservableCollection<Department>();
         }
 
         public DepartmentsRepository(string path) : this()
@@ -46,8 +46,7 @@ namespace DepartmentsRepository_WPF
         {
             //this.Departments.Add(new Department(departmentName));
             this.firstDepartment = new Department(departmentName);
-            Departments = new ObservableCollection<Department>();
-            Departments.Add(this.firstDepartment);
+            this.Departments.Add(this.firstDepartment);
         }
 
         public void CreateNewDepartment(string departmentName, Department department)
@@ -69,60 +68,17 @@ namespace DepartmentsRepository_WPF
             return count;
         }
 
-        public ObservableCollection<Department> GetListOfDepartments(Department concreteDepartment)
-        {
-            ObservableCollection<Department> listOfDepartments = new ObservableCollection<Department>();
-            ObservableCollection<Department> tempList = new ObservableCollection<Department>();
-
-            int length = concreteDepartment.Departments.Count;
-
-            for (int i = 0; i < length; i++)
-            {
-                tempList = GetListOfDepartments(concreteDepartment.Departments[i]);
-                foreach (var item in tempList)
-                {
-                    listOfDepartments.Add(item);
-                }
-            }
-            listOfDepartments.Add(concreteDepartment);
-
-            return listOfDepartments;
-        }
-
+       
         public Department GetConcreteDepartmentByName(Department concreteDepartment, string departmentName)
         {
             int length = concreteDepartment.Departments.Count;
-
             for (int i = 0; i < length; i++)
             {
                 GetConcreteDepartmentByName(concreteDepartment.Departments[i], departmentName);
             }
             if (concreteDepartment.DepartmentName.Contains(departmentName)) return concreteDepartment;
             else return null;
-
         }
-
-        public Department GetDepartmentAncestor(Department childDepartment, Department parentDepartment)
-        {
-            Department searchDepartment = default;
-            var departments = parentDepartment.Departments;
-
-            foreach (var department in departments)
-            {
-                if (department == childDepartment)
-                {
-                    return parentDepartment;
-                }
-                else if (department.Departments.Count != 0)
-                {
-                    searchDepartment = GetDepartmentAncestor(childDepartment, department);
-                }
-            }
-
-
-            return searchDepartment;
-        }
-
 
         public const string INVALID_NAME = "Invalid value entered. The name must contain only letters, at least '4'. Try again.";
 
@@ -139,7 +95,6 @@ namespace DepartmentsRepository_WPF
                 isVarCorrect = Char.IsLetter(element);
                 if (!isVarCorrect) break;
             }
-
             return isVarCorrect;
         }
     }
