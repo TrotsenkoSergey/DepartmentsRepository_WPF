@@ -1,0 +1,127 @@
+{
+  "$id": "1",
+  "$values": [
+    {
+      "$id": "2",
+      "CreationTime": "2021-08-07T00:57:32.4148974+06:00",
+      "DepartmentName": "xcvxcvxcv",
+      "Employes": {
+        "$id": "3",
+        "$values": [
+          {
+            "$id": "4",
+            "CreationTime": "07.08.2021  0:57",
+            "FirstName": "xcvxcvxcvxc",
+            "FullName": "xcvxc xcvxcvxcvxc",
+            "LastName": "xcvxc",
+            "DateOfBirth": "13.01.2000",
+            "Department_": {
+              "$ref": "2"
+            },
+            "Salary": 3000,
+            "Attribute": 0
+          },
+          {
+            "$id": "5",
+            "CreationTime": "07.08.2021  0:57",
+            "FirstName": "xcvxcvxcvxc",
+            "FullName": "vxcvxc xcvxcvxcvxc",
+            "LastName": "vxcvxc",
+            "DateOfBirth": "12.01.2000",
+            "Department_": {
+              "$ref": "2"
+            },
+            "Salary": 2000,
+            "Attribute": 1
+          }
+        ]
+      },
+      "Departments": {
+        "$id": "6",
+        "$values": [
+          {
+            "$id": "7",
+            "CreationTime": "2021-08-07T00:57:35.8304725+06:00",
+            "DepartmentName": "xcvxcvxc",
+            "Employes": {
+              "$id": "8",
+              "$values": [
+                {
+                  "$id": "9",
+                  "CreationTime": "07.08.2021  0:57",
+                  "FirstName": "xcvxcvxcvxc",
+                  "FullName": "xcvxcv xcvxcvxcvxc",
+                  "LastName": "xcvxcv",
+                  "DateOfBirth": "20.01.2000",
+                  "Department_": {
+                    "$ref": "7"
+                  },
+                  "Salary": 1300,
+                  "Attribute": 2
+                }
+              ]
+            },
+            "Departments": {
+              "$id": "10",
+              "$values": [
+                {
+                  "$id": "11",
+                  "CreationTime": "2021-08-07T00:58:09.8255235+06:00",
+                  "DepartmentName": "AAAA",
+                  "Employes": {
+                    "$id": "12",
+                    "$values": [
+                      {
+                        "$id": "13",
+                        "CreationTime": "07.08.2021  0:58",
+                        "FirstName": "dsfsdfsdfsdf",
+                        "FullName": "sdfsdf dsfsdfsdfsdf",
+                        "LastName": "sdfsdf",
+                        "DateOfBirth": "28.01.2000",
+                        "Department_": {
+                          "$ref": "11"
+                        },
+                        "Salary": 1300,
+                        "Attribute": 2
+                      },
+                      {
+                        "$id": "14",
+                        "CreationTime": "07.08.2021  0:58",
+                        "FirstName": "sdfsdfsdfsd",
+                        "FullName": "fsdfsdf sdfsdfsdfsd",
+                        "LastName": "fsdfsdf",
+                        "DateOfBirth": "12.01.2000",
+                        "Department_": {
+                          "$ref": "11"
+                        },
+                        "Salary": 2400,
+                        "Attribute": 3
+                      }
+                    ]
+                  },
+                  "Departments": {
+                    "$id": "15",
+                    "$values": []
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "$id": "16",
+            "CreationTime": "2021-08-07T00:58:02.0698381+06:00",
+            "DepartmentName": "xcvxcvxc",
+            "Employes": {
+              "$id": "17",
+              "$values": []
+            },
+            "Departments": {
+              "$id": "18",
+              "$values": []
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+﻿      HELP - HELP for working with the application
+      
+      1. This program will help you organize and structure your organization.
+      The user interface is presented with several handy tools:
+      - pop-up menus in the upper left part of the window will help you work with help, files, manage Departments and Employees,
+      - a list of available departments in a tree structure will help you to have an idea of ​​the structure of departments and to quickly address each of them by searching and highlighting the required element by its name. In addition to the name, the tree structure also has information about the number of employees in each department.
+      - the list of available employees in a specific department is available in the right part of the window, by selecting a specific department in the tree-like list, you get access to it in the right part of the window. The interface allows you to sort the employees by clicking the column names button (except for the department name and attribute, since there is no practical need for this).
+      
+      P.S. It should be noted that each element of the user interface changes dynamically depending on changes in the content of the information data (i.e. adding / deleting / editing any property of the element will be reflected on the corresponding elements of the interface).
+      
+      2. To start the program, you can:
+      - create a new entity of departments simply by creating the first (or main department), which you cannot subsequently delete and successively add other departments of any nesting level to it.
+      - either load an existing previously created and saved storage of the Departments.
+      
+      3. The algorithm for working with the Departments menu works as follows.
+      Each creation of a new department is reflected in the dialog box. The window has fields for the Name and Selection of the department (from the previously created ones), for its nesting. Only for the first (main department) there is an option not to select the nesting of departments; for subsequent creation, the program will not allow leaving this field empty.
+      Each created department can be renamed by highlighting it in the tree structure and clicking the corresponding command in the pop-up menu. There is a certain requirement for any naming in the application (names of departments, employees) must consist only of letters and at least 4x. Accordingly, the program will also control this part of the requirements.
+      All previously created departments can be deleted by highlighting a specific department in the tree structure and clicking the corresponding command in the pop-up menu. The first (main department) cannot be deleted (the program will not allow you to do this). If you intend to delete the first department, then in fact you are going to create a new structure, respectively, you have the opportunity to re-enter the program and create a new structure. Any deletion in the program occurs after additional approval in a pop-up message window.
+      
+      4. Algorithm for working with the Workers menu.
+      Each new employee is created through a pop-up corresponding dialog box. This window will not be called if there is no (not created) department structure.
+      The structure of employees consists of the Director of the main department and his deputy, directors of nested departments and employees (interns) of these departments.
+      After creating the first (main) department, a menu for adding an employee will be available to you. The first to add you will be offered the position of director, if there is such a subsequent to the addition, the program will offer the position of deputy director.
+      At the same time, in the pop-up window for adding employees, the program will automatically generate a list of available departments to which you will add your employees.
+      It is possible to add only the Director and his deputy to the first (main) department; subsequently, the program will not give you the opportunity to add anyone else to this nesting level.
+      In each subsequent department, the first to add you will be asked to add the head of a particular department, and after that - the employees of this department.
+      The algorithm for dismissing (removing from the list) employees is implemented in the same way. If you delete the Head of a certain department, then the first to be added to this department will again be offered to you - the Head (despite the fact that, for example, there is already a list of employees there). The algorithm for the dismissal of the Director of the Main Department and his deputy works in the same way. These positions will be the first to be proposed for addition.
+      The feature of the algorithms is the dynamic recalculation and reflection in the user interface of the wages of the Head of a particular department, the Director of the Main Department and his deputy. Since their salary depends on the salary of EACH employee (has a certain coefficient), taking into account the nesting! Those. for the head of a particular department, where there are still nested departments, wages will depend on all employees working in his department and in nested departments.
+      According to the terms of reference, the specified coefficients are constants (although later they can be added in the user interface by the user).
+      So, for the Director of the Main Department, the minimum wage is 3000 per month, the coefficient is 0.15. His deputy has 2000, the coefficient is 0.05. The head of a particular department has 1300, the coefficient is 0.15.
+      An employee of the department has a fixed wage and is 12 per working hour. An intern - 500 per month.
+      Those. Taking into account the applied coefficients, starting conditionally from the 5th employee, the minimum wage of the head of a particular department changes, and only for the 7th added employee, the salary of the head of a particular department is compared with the salary of an employee in this department. And starting with only conditionally 10 employees in the total number of employees in the department, the salary of the Director of the Main Department increases from the minimum wage. His deputy - conditionally with 16 employees.
+      

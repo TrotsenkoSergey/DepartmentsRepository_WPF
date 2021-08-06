@@ -1,12 +1,12 @@
 ﻿<Window x:Class="DepartmentsRepository_WPF.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DepartmentsRepository_WPF"
         mc:Ignorable="d"
-        Title="DepartmentsApp" Height="450" Width="950" WindowStartupLocation="CenterScreen">
-   
+        Title="DepartmentsApp" Icon="Department.png" Height="450" Width="950" WindowStartupLocation="CenterScreen">
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="27*"/>
@@ -22,15 +22,14 @@
         <WrapPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" Margin="5 0 0 0">
             <Menu>
                 <MenuItem x:Name="Menu" Header="Menu" Height="20" Width="45" Padding="5,1,5,1" BorderBrush="Black" BorderThickness="0.1">
-                    <MenuItem x:Name="Minimize" Header="Minimize"/>
-                    <MenuItem x:Name="Help" Header="Help"/>
-                    <MenuItem x:Name="Reference" Header="Reference"/>
-                    <MenuItem x:Name="Exit" Header ="Exit"/>
+                    <MenuItem x:Name="Minimize" Header="Minimize" Click="Minimize_Click"/>
+                    <MenuItem x:Name="Reference" Header="Reference" Click="Reference_Click"/>
+                    <MenuItem x:Name="Exit" Header ="Exit" Click="Exit_Click"/>
                 </MenuItem>
                 <MenuItem x:Name="File" Header="File" Height="20" Width="40" Padding="10,1,5,1" BorderBrush="Black" BorderThickness="0.1">
-                    <MenuItem Header="Save Data"/>
-                    <MenuItem Header="Load Data"/>
-                    <MenuItem Header="Path Data"/>
+                    <MenuItem Header="Save Data" Click="Save_Click"/>
+                    <MenuItem Header="Load Data" Click="Load_Click"/>
+                    <MenuItem Header="Path Data" Click="PathData_Click"/>
                 </MenuItem>
                 <MenuItem x:Name="Departments" Header="Departments" Height="20" Width="85" Padding="5,1,5,1" BorderBrush="Black" BorderThickness="0.1">
                     <MenuItem Header="Create" Click="CreateDepartment_Click"/>
@@ -39,14 +38,18 @@
                 </MenuItem>
                 <MenuItem x:Name="Employes" Header="Employes" Height="20" Width="65" Padding="5,1,5,1" BorderBrush="Black" BorderThickness="0.1">
                     <MenuItem Header="Add" Click="AddEmploye_Click"/>
-                    <MenuItem Header="Rename"/>
-                    <MenuItem Header="Remove"/>
+                    <MenuItem Header="Rename" Click="RenameEmploye_Click"/>
+                    <MenuItem Header="Remove" Click="RemoveEmploye_Click"/>
+                </MenuItem>
+                <MenuItem x:Name="Help" Header="Help" Height="20" Width="40" Padding="5,1,5,1" BorderBrush="Black" BorderThickness="0.1">
+                    <MenuItem Header="ENG" Click="HelpENG_Click"/>
+                    <MenuItem Header="RUS" Click="HelpRUS_Click" />
                 </MenuItem>
             </Menu>
         </WrapPanel>
 
         <TreeView Name="trvDepartments" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Margin="5" SelectedItemChanged="trvDepartments_SelectedItemChanged" >
-                <TreeView.ItemTemplate>
+            <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type local:DepartmentsRepository}" ItemsSource="{Binding Departments}" >
                     <WrapPanel>
                         <TextBlock Text="{Binding DepartmentName}" FontWeight="Bold" />
@@ -54,16 +57,15 @@
                         <TextBlock Text="{Binding Employes.Count}"/>
                     </WrapPanel>
                 </HierarchicalDataTemplate>
-                </TreeView.ItemTemplate>
-           
+            </TreeView.ItemTemplate>
         </TreeView>
 
-        <ListView x:Name="lvEmployes" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="5" ItemsSource="{Binding Employes}">
+        <ListView x:Name="lvEmployes" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="5" ItemsSource="{Binding Employes, UpdateSourceTrigger=PropertyChanged}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="120" DisplayMemberBinding="{Binding CreationTime}">
                         <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="CreationTime">Time of admission</GridViewColumnHeader>
+                            <GridViewColumnHeader Tag="CreationTime" Click="GridViewColumnHeaderCreationTime_Click">Time of admission</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
                     <GridViewColumn Width="120" DisplayMemberBinding="{Binding FullName, UpdateSourceTrigger=PropertyChanged}">
@@ -73,7 +75,7 @@
                     </GridViewColumn>
                     <GridViewColumn Width="80" DisplayMemberBinding="{Binding DateOfBirth}">
                         <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="DateOfBirth">Birth Date</GridViewColumnHeader>
+                            <GridViewColumnHeader Tag="DateOfBirth" Click="GridViewColumnHeaderDateOfBirth_Click">Birth Date</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
                     <GridViewColumn Width="120" DisplayMemberBinding="{Binding Department_.DepartmentName}">
@@ -94,7 +96,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
-
 
     </Grid>
 </Window>
