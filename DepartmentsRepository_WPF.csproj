@@ -61,12 +61,6 @@
     <Compile Include="Employe\Attribute.cs" />
     <Compile Include="Department.cs" />
     <Compile Include="DepartmentsRepository.cs" />
-    <Compile Include="PageAddEmploye.xaml.cs">
-      <DependentUpon>PageAddEmploye.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PageCalendar.xaml.cs">
-      <DependentUpon>PageCalendar.xaml</DependentUpon>
-    </Compile>
     <Compile Include="WindowDepartmentCreation.xaml.cs">
       <DependentUpon>WindowDepartmentCreation.xaml</DependentUpon>
     </Compile>
@@ -77,6 +71,9 @@
       <DependentUpon>WindowEmployeAdd.xaml</DependentUpon>
     </Compile>
     <Compile Include="Employe\Worker.cs" />
+    <Compile Include="WindowEmployeRename.xaml.cs">
+      <DependentUpon>WindowEmployeRename.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -90,14 +87,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="PageAddEmploye.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PageCalendar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="WindowDepartmentCreation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -107,6 +96,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WindowEmployeAdd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowEmployeRename.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -138,6 +131,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="help-1657279_960_720.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Department.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

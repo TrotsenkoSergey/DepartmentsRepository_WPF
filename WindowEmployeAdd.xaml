@@ -1,12 +1,36 @@
-﻿<Window x:Class="DepartmentsRepository_WPF.WindowEmployeAdd"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DepartmentsRepository_WPF"
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Class="DepartmentsRepository_WPF.WindowEmployeAdd"
         mc:Ignorable="d"
-         Title="DepartmentsApp" Height="400" Width="400" WindowStartupLocation="CenterOwner">
+        xml:lang="en-US"
+         Title="DepartmentsApp" Icon="Department.png" Height="410" Width="410" WindowStartupLocation="CenterOwner">
     <Grid>
-        <Frame x:Name="Frame" NavigationUIVisibility="Hidden"/>
+        <GroupBox Header="Employe add-on window" Margin="10" Padding="10">
+            <StackPanel>
+                <TextBlock><Run Text="Write new employe Firstname:"/></TextBlock>
+                <TextBox x:Name="tbEmployeFirstName"/>
+                <TextBlock><Run Text="Write new employe Lastname:"/></TextBlock>
+                <TextBox x:Name="tbEmployeLastName"/>
+                <WrapPanel Orientation="Horizontal">
+                    <TextBlock Margin="0 10 10 10"><Run Text="Select or write Date of birth:"/></TextBlock>
+                    <DatePicker x:Name="dpDatePicker" Width="150" Margin="5 6 5 5" Text="01/01/2000" 
+                                SelectedDate ="{Binding dpDatePicker.Text}" />
+                </WrapPanel>
+                <TextBlock Text="Select the department to which the new employee will be added:" />
+                <ComboBox x:Name="cbDepartments">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock x:Name="tbDepartments" Text="{Binding DepartmentName}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <TextBlock Text="Select Attribute employe:"/>
+                <ComboBox x:Name="cbAttribute" />
+                <Button Margin="0,20" Click="Button_AddEmploye" Content="Add Employe"/>
+            </StackPanel>
+        </GroupBox>
     </Grid>
 </Window>

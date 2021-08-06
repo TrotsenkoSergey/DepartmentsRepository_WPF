@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DepartmentsRepository_WPF
 {
@@ -12,21 +8,27 @@ namespace DepartmentsRepository_WPF
         private const double SALARY_WORKER_PER_HOUR = 12;
         private const double SALARY_INTERN_PER_MONTH = 500;
 
-        public Worker(string firstName, string lastName, DateTime dateOfBirth, EmployeAttribute attribute, Department department, Department firstDepartment) 
+        public Worker(string firstName, string lastName, DateTime dateOfBirth, EmployeAttribute attribute, Department department, Department firstDepartment)
             : base(firstName, lastName, dateOfBirth, attribute, department, firstDepartment)
         {
-            department.GetHeadOfDepartment(department).Salary = default;
+            Department parentDepartment = department;
+            while (parentDepartment != firstDepartment) 
+            {
+                parentDepartment.GetHeadOfDepartment(parentDepartment).Salary = default;
+                parentDepartment = parentDepartment.GetDepartmentAncestor(parentDepartment, firstDepartment);
+            }
+
             department.GetDeputyDirector(firstDepartment).Salary = default;
             department.GetDirector(firstDepartment).Salary = default;
         }
 
         public override double Salary
         {
-           get
+            get
             {
                 return this.salary;
             }
-            set 
+            set
             {
                 if (this.Attribute == EmployeAttribute.Worker)
                 {

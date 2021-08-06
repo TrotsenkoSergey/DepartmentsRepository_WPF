@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DepartmentsRepository_WPF
 {
@@ -28,12 +24,24 @@ namespace DepartmentsRepository_WPF
         public virtual string FirstName
         {
             get { return this.firstName; }
-            set { this.firstName = value; }
+            set 
+            { 
+                this.firstName = value;
+                FullName = default; // using Interface INotifyPropertyChanged
+                OnPropertyChanged(); // using Interface INotifyPropertyChanged
+            }
         }
 
         public virtual string FullName
         {
-            get { return $"{this.lastName} {this.firstName}"; }
+            get 
+            { 
+                return $"{this.lastName} {this.firstName}";
+            }
+            set 
+            { 
+                OnPropertyChanged(); // using Interface INotifyPropertyChanged
+            }
         }
 
         public virtual string LastName
@@ -42,6 +50,7 @@ namespace DepartmentsRepository_WPF
             set 
             { 
                 this.lastName = value;
+                FullName = default; // using Interface INotifyPropertyChanged
                 OnPropertyChanged(); // using Interface INotifyPropertyChanged
             }
         }
@@ -76,5 +85,6 @@ namespace DepartmentsRepository_WPF
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
     }
 }

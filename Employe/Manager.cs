@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DepartmentsRepository_WPF
 {
@@ -22,6 +18,14 @@ namespace DepartmentsRepository_WPF
         {
             if (attribute == EmployeAttribute.Head_Of_Department)
             {
+                Department parentDepartment = department;
+                while (parentDepartment != firstDepartment)
+                {
+                    parentDepartment = parentDepartment.GetDepartmentAncestor(parentDepartment, firstDepartment);
+                    if (parentDepartment != firstDepartment)
+                    { parentDepartment.GetHeadOfDepartment(parentDepartment).Salary = default; }
+                }
+
                 department.GetDeputyDirector(firstDepartment).Salary = default;
                 department.GetDirector(firstDepartment).Salary = default;
             }
@@ -55,7 +59,8 @@ namespace DepartmentsRepository_WPF
                 }
 
                 double salary = GetSalaryOfEmployes(this.department) * salaryRatio;
-                this.salary = (salary < minSalary) ? minSalary : salary;
+                salary = (salary < minSalary) ? minSalary : salary;
+                this.salary = Math.Round(salary, 2);
                 
                 OnPropertyChanged(); // using Interface INotifyPropertyChanged
             }
