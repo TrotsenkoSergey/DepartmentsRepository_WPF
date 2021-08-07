@@ -13,6 +13,15 @@ namespace DepartmentsRepository_WPF
         private const double HEAD_OF_DEPARTMENT_SALARY_RATIO = 0.15;
         private const double HEAD_OF_DEPARTMENT_MIN_SALARY = 1300;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="dateOfBirth"></param>
+        /// <param name="attribute"></param>
+        /// <param name="department"></param>
+        /// <param name="firstDepartment"></param>
         public Manager(string firstName, string lastName, DateTime dateOfBirth, EmployeAttribute attribute, Department department, Department firstDepartment)
              : base(firstName, lastName, dateOfBirth, attribute, department, firstDepartment)
         {
@@ -31,6 +40,9 @@ namespace DepartmentsRepository_WPF
             }
         }
 
+        /// <summary>
+        /// Salary.
+        /// </summary>
         public override double Salary
         {
             get
@@ -66,6 +78,11 @@ namespace DepartmentsRepository_WPF
             }
         }
 
+        /// <summary>
+        /// Calculate the salaries of all employees of the current department and its descendants.
+        /// </summary>
+        /// <param name="department"></param>
+        /// <returns></returns>
         private double GetSalaryOfEmployes(Department department)
         {
             double salaryOfEmployes = default;

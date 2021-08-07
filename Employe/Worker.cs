@@ -8,6 +8,15 @@ namespace DepartmentsRepository_WPF
         private const double SALARY_WORKER_PER_HOUR = 12;
         private const double SALARY_INTERN_PER_MONTH = 500;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="dateOfBirth"></param>
+        /// <param name="attribute"></param>
+        /// <param name="department"></param>
+        /// <param name="firstDepartment"></param>
         public Worker(string firstName, string lastName, DateTime dateOfBirth, EmployeAttribute attribute, Department department, Department firstDepartment)
             : base(firstName, lastName, dateOfBirth, attribute, department, firstDepartment)
         {
@@ -22,6 +31,9 @@ namespace DepartmentsRepository_WPF
             department.GetDirector(firstDepartment).Salary = default;
         }
 
+        /// <summary>
+        /// Salary.
+        /// </summary>
         public override double Salary
         {
             get
