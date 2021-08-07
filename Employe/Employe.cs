@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 namespace DepartmentsRepository_WPF
 {
     public abstract class Employe : INotifyPropertyChanged // the specified interface gives us the ability
-                                                           // to change the values ​​of the TreeView.Item property       
+                                                           // to change the values ​​of the ListView.Item property       
     {
 
         protected private DateTime creationTime;

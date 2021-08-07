@@ -83,8 +83,5 @@ namespace DepartmentsRepository_WPF
             }
             return salaryOfEmployes;
         }
-
-        
-
     }
 }
