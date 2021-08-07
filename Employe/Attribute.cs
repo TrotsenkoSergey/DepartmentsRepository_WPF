@@ -1,5 +1,8 @@
 ﻿namespace DepartmentsRepository_WPF
 {
+    /// <summary>
+    /// EmployeAttribute.
+    /// </summary>
     public enum EmployeAttribute
     {
         Director,

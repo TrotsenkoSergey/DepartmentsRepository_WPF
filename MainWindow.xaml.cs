@@ -22,6 +22,11 @@ namespace DepartmentsRepository_WPF
             trvDepartments.ItemsSource = this.departmentsRepository.Departments;
         }
 
+        /// <summary>
+        /// Calls up a window for create a specific department.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CreateDepartment_Click(object sender, RoutedEventArgs e)
         {
             Window windowDepartmentCreation = new WindowDepartmentCreation(this.departmentsRepository);
@@ -29,6 +34,11 @@ namespace DepartmentsRepository_WPF
             windowDepartmentCreation.ShowDialog();
         }
 
+        /// <summary>
+        /// Calls up a window for renaming a specific department.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RenameDepartment_Click(object sender, RoutedEventArgs e)
         {
             if (trvDepartments.SelectedItem is Department)
@@ -43,6 +53,11 @@ namespace DepartmentsRepository_WPF
             }
         }
 
+        /// <summary>
+        /// Calls a method to remove an employee from the list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RemoveDepartment_Click(object sender, RoutedEventArgs e)
         {
             if (trvDepartments.SelectedItem is Department && (trvDepartments.SelectedItem as Department != this.departmentsRepository.FirstDepartment))
@@ -66,6 +81,11 @@ namespace DepartmentsRepository_WPF
             }
         }
 
+        /// <summary>
+        /// Calls a method to add an employee to the list.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddEmploye_Click(object sender, RoutedEventArgs e)
         {
             if (this.departmentsRepository == null || this.departmentsRepository.FirstDepartment == null)
@@ -87,6 +107,11 @@ namespace DepartmentsRepository_WPF
             }
         }
 
+        /// <summary>
+        /// Links the selected department to the list of its employees.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void trvDepartments_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             if (trvDepartments.SelectedItem is Department)
@@ -95,6 +120,11 @@ namespace DepartmentsRepository_WPF
             }
         }
 
+        /// <summary>
+        /// Calls a method to sort employes by Last name.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GridViewColumnHeaderName_Click(object sender, RoutedEventArgs e)
         {
             if (trvDepartments.SelectedItem is Department)
@@ -104,6 +134,11 @@ namespace DepartmentsRepository_WPF
             }
         }
 
+        /// <summary>
+        /// Calls a method to sort employes by Salary.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GridViewColumnHeaderSalary_Click(object sender, RoutedEventArgs e)
         {
             if (trvDepartments.SelectedItem is Department)
@@ -113,6 +148,11 @@ namespace DepartmentsRepository_WPF
             }
         }
 
+        /// <summary>
+        /// Calls a method to sort employes by the date they were added to the list.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GridViewColumnHeaderCreationTime_Click(object sender, RoutedEventArgs e)
         {
             if (trvDepartments.SelectedItem is Department)
@@ -122,6 +162,11 @@ namespace DepartmentsRepository_WPF
             }
         }
 
+        /// <summary>
+        /// Calls a method to sort employes by the date of birth.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GridViewColumnHeaderDateOfBirth_Click(object sender, RoutedEventArgs e)
         {
             if (trvDepartments.SelectedItem is Department)
