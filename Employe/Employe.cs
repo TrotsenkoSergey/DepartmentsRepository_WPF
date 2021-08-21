@@ -7,7 +7,7 @@ namespace DepartmentsRepository_WPF
     /// <summary>
     /// Employe entity abstract class.
     /// </summary>
-    public abstract class Employe : INotifyPropertyChanged // the specified interface gives us the ability
+    public class Employe : INotifyPropertyChanged // the specified interface gives us the ability
                                                            // to change the values ​​of the ListView.Item property       
     {
 
@@ -22,9 +22,9 @@ namespace DepartmentsRepository_WPF
         /// <summary>
         /// Time to add to the list.
         /// </summary>
-        public string CreationTime
+        public DateTime CreationTime
         {
-            get { return $"{this.creationTime.ToShortDateString()}  {this.creationTime.ToShortTimeString()}"; }
+            get { return this.creationTime; }
         }
 
         /// <summary>
@@ -73,9 +73,9 @@ namespace DepartmentsRepository_WPF
         /// <summary>
         /// Date of birth.
         /// </summary>
-        public string DateOfBirth
+        public DateTime DateOfBirth
         {
-            get { return this.dateOfBirth.ToShortDateString(); }
+            get { return this.dateOfBirth.Date; }
         }
 
         //[JsonIgnore]
@@ -93,6 +93,8 @@ namespace DepartmentsRepository_WPF
         /// Position.
         /// </summary>
         public virtual EmployeAttribute Attribute { get; set; }
+
+        public Employe() { }
 
         /// <summary>
         /// Constructor.

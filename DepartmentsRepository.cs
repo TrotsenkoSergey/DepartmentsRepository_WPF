@@ -25,7 +25,7 @@ namespace DepartmentsRepository_WPF
         /// <summary>
         /// Constructor.
         /// </summary>
-        public DepartmentsRepository()
+        public DepartmentsRepository() 
         {
             Departments = new ObservableCollection<Department>();
         }

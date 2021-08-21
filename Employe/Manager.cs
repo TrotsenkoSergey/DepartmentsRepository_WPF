@@ -13,6 +13,8 @@ namespace DepartmentsRepository_WPF
         private const double HEAD_OF_DEPARTMENT_SALARY_RATIO = 0.15;
         private const double HEAD_OF_DEPARTMENT_MIN_SALARY = 1300;
 
+        public Manager() { }
+
         /// <summary>
         /// Constructor.
         /// </summary>

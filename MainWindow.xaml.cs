@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Xml.Serialization;
 
 namespace DepartmentsRepository_WPF
 {
@@ -14,6 +15,7 @@ namespace DepartmentsRepository_WPF
     {
         DepartmentsRepository departmentsRepository;
         const string JSON_FILE_NAME = "departmentsRepository.json";
+        //const string XML_FILE_NAME = "departmentsRepository.xml";
 
         public MainWindow()
         {
@@ -254,19 +256,29 @@ namespace DepartmentsRepository_WPF
                 string json = System.IO.File.ReadAllText(JSON_FILE_NAME);
                 //this.departmentsRepository.Departments = JsonConvert.DeserializeObject<ObservableCollection<Department>>(json, settings);
 
-
                 JsonSerializerOptions options = new JsonSerializerOptions()
                 {
+                    //PropertyNameCaseInsensitive = true,
                     ReferenceHandler = ReferenceHandler.Preserve,
-                    WriteIndented = true
+                    WriteIndented = true,
+                    IncludeFields = true,
                 };
 
 
                 this.departmentsRepository.Departments = JsonSerializer.Deserialize<ObservableCollection<Department>>(json, options);
+                
                 trvDepartments.ItemsSource = this.departmentsRepository.Departments;
                 if (departmentsRepository.Departments.Count != 0)
                 { this.departmentsRepository.FirstDepartment = departmentsRepository.Departments[0]; }
             }
+            //if (!System.IO.File.Exists(XML_FILE_NAME)) MessageBox.Show("You havnt file to download, first - save something.");
+            //else
+            //{
+
+
+            //}
+
+
         }
 
         /// <summary>
@@ -283,11 +295,21 @@ namespace DepartmentsRepository_WPF
             JsonSerializerOptions options = new JsonSerializerOptions()
             {
                 ReferenceHandler = ReferenceHandler.Preserve,
-                WriteIndented = true
+                WriteIndented = true,
+                IncludeFields = true,
             };
 
-            string json = JsonSerializer.Serialize(this.departmentsRepository.Departments, typeof(ObservableCollection<Department>), options);
+            string json = JsonSerializer.Serialize(this.departmentsRepository.Departments, 
+                typeof(ObservableCollection<Department>), options);
             System.IO.File.WriteAllText(JSON_FILE_NAME, json);
+
+            //XmlSerializer xmlSerializer = new XmlSerializer(typeof(DepartmentsRepository));
+
+            //Stream fStream = new FileStream(XML_FILE_NAME, FileMode.Create, FileAccess.Write);
+
+            //xmlSerializer.Serialize(fStream, this.departmentsRepository);
+
+            //fStream.Close();
         }
 
         /// <summary>

@@ -13,6 +13,7 @@ namespace DepartmentsRepository_WPF
                                                      // to change the values ​​of the TreeView.Item property       
     {
 
+        private DateTime creationTime;
         private string departmentName;
         private ObservableCollection<Employe> employes;
         private ObservableCollection<Department> departments;
@@ -20,7 +21,7 @@ namespace DepartmentsRepository_WPF
         /// <summary>
         /// Date the department was added to the repository.
         /// </summary>
-        public DateTime CreationTime { get; private set; }
+        public DateTime CreationTime { get { return this.creationTime; } }
 
         /// <summary>
         /// Department name.
@@ -67,16 +68,18 @@ namespace DepartmentsRepository_WPF
             }
         }
 
+        public Department() { }
+
         /// <summary>
         /// Department constructor.
         /// </summary>
         /// <param name="departmentName"></param>
         public Department(string departmentName)
         {
+            this.creationTime = DateTime.Now;
             this.departmentName = departmentName;
             this.employes = new ObservableCollection<Employe>();
             this.Departments = new ObservableCollection<Department>();
-            this.CreationTime = DateTime.Now;
         }
 
         /// <summary>
@@ -88,10 +91,13 @@ namespace DepartmentsRepository_WPF
         /// <param name="attribute"></param>
         /// <param name="department"></param>
         /// <param name="firstDepartment"></param>
-        public void AddEmploye(string firstName, string lastName, DateTime dateOfBirth, EmployeAttribute attribute, Department department, Department firstDepartment)
+        public void AddEmploye(string firstName, string lastName, DateTime dateOfBirth, 
+            EmployeAttribute attribute, Department department, Department firstDepartment)
         {
-            if ((int)attribute <= 2) this.Employes.Add(new Manager(firstName, lastName, dateOfBirth, attribute, department, firstDepartment));
-            else this.Employes.Add(new Worker(firstName, lastName, dateOfBirth, attribute, department, firstDepartment));
+            if ((int)attribute <= 2) this.Employes.Add(new Manager(firstName, lastName, 
+                dateOfBirth, attribute, department, firstDepartment));
+            else this.Employes.Add(new Worker(firstName, lastName, dateOfBirth, 
+                attribute, department, firstDepartment));
         }
 
         /// <summary>

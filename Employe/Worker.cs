@@ -8,6 +8,8 @@ namespace DepartmentsRepository_WPF
         private const double SALARY_WORKER_PER_HOUR = 12;
         private const double SALARY_INTERN_PER_MONTH = 500;
 
+        public Worker() { }
+
         /// <summary>
         /// Constructor.
         /// </summary>
