@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 
 namespace DepartmentsRepository_WPF
 {
@@ -18,10 +19,16 @@ namespace DepartmentsRepository_WPF
         private ObservableCollection<Employe> employes;
         private ObservableCollection<Department> departments;
 
+        public Department() { }
+
         /// <summary>
         /// Date the department was added to the repository.
         /// </summary>
-        public DateTime CreationTime { get { return this.creationTime; } }
+        public DateTime CreationTime
+        {
+            get { return this.creationTime; }
+            set { creationTime = value; }
+        }
 
         /// <summary>
         /// Department name.
@@ -55,7 +62,7 @@ namespace DepartmentsRepository_WPF
         /// <summary>
         /// Subdivisions of the department (subdepartments).
         /// </summary>
-        public ObservableCollection<Department> Departments 
+        public ObservableCollection<Department> Departments
         {
             get
             {
@@ -68,7 +75,7 @@ namespace DepartmentsRepository_WPF
             }
         }
 
-        public Department() { }
+        public Department This => this;
 
         /// <summary>
         /// Department constructor.
@@ -91,12 +98,12 @@ namespace DepartmentsRepository_WPF
         /// <param name="attribute"></param>
         /// <param name="department"></param>
         /// <param name="firstDepartment"></param>
-        public void AddEmploye(string firstName, string lastName, DateTime dateOfBirth, 
+        public void AddEmploye(string firstName, string lastName, DateTime dateOfBirth,
             EmployeAttribute attribute, Department department, Department firstDepartment)
         {
-            if ((int)attribute <= 2) this.Employes.Add(new Manager(firstName, lastName, 
+            if ((int)attribute <= 2) this.Employes.Add(new Manager(firstName, lastName,
                 dateOfBirth, attribute, department, firstDepartment));
-            else this.Employes.Add(new Worker(firstName, lastName, dateOfBirth, 
+            else this.Employes.Add(new Worker(firstName, lastName, dateOfBirth,
                 attribute, department, firstDepartment));
         }
 
@@ -106,7 +113,7 @@ namespace DepartmentsRepository_WPF
         /// <param name="concreteEmploye"></param>
         public void RemoveEmploye(Employe concreteEmploye)
         {
-            concreteEmploye.Department_.Employes.Remove(concreteEmploye);
+            Employes.Remove(concreteEmploye);
         }
 
         /// <summary>

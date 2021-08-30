@@ -1,16 +1,16 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 
 namespace DepartmentsRepository_WPF
 {
     /// <summary>
     /// Employe entity abstract class.
     /// </summary>
-    public class Employe : INotifyPropertyChanged // the specified interface gives us the ability
-                                                           // to change the values ​​of the ListView.Item property       
+    public abstract class Employe : INotifyPropertyChanged // the specified interface gives us the ability
+                                                                                            // to change the values ​​of the ListView.Item property       
     {
-
         protected private DateTime creationTime;
         protected private string firstName;
         protected private string lastName;
@@ -25,6 +25,7 @@ namespace DepartmentsRepository_WPF
         public DateTime CreationTime
         {
             get { return this.creationTime; }
+            set { creationTime = value; }
         }
 
         /// <summary>
@@ -33,25 +34,26 @@ namespace DepartmentsRepository_WPF
         public virtual string FirstName
         {
             get { return this.firstName; }
-            set 
-            { 
+            set
+            {
                 this.firstName = value;
                 FullName = default; // using Interface INotifyPropertyChanged
                 OnPropertyChanged(); // using Interface INotifyPropertyChanged
             }
         }
 
+        [JsonIgnore]
         /// <summary>
         /// Last and First name.
         /// </summary>
         public virtual string FullName
         {
-            get 
-            { 
+            get
+            {
                 return $"{this.lastName} {this.firstName}";
             }
-            set 
-            { 
+            set
+            {
                 OnPropertyChanged(); // using Interface INotifyPropertyChanged
             }
         }
@@ -62,8 +64,8 @@ namespace DepartmentsRepository_WPF
         public virtual string LastName
         {
             get { return this.lastName; }
-            set 
-            { 
+            set
+            {
                 this.lastName = value;
                 FullName = default; // using Interface INotifyPropertyChanged
                 OnPropertyChanged(); // using Interface INotifyPropertyChanged
@@ -75,14 +77,18 @@ namespace DepartmentsRepository_WPF
         /// </summary>
         public DateTime DateOfBirth
         {
-            get { return this.dateOfBirth.Date; }
+            get { return this.dateOfBirth; }
+            set { dateOfBirth = value; }
         }
 
-        //[JsonIgnore]
         /// <summary>
         /// Department to which the employee is attached.
         /// </summary>
-        public virtual Department Department_ { get { return this.department; } }
+        public virtual Department Department
+        {
+            get { return this.department; }
+            set { department = value; }
+        }
 
         /// <summary>
         /// Salary.
@@ -110,7 +116,7 @@ namespace DepartmentsRepository_WPF
             this.creationTime = DateTime.Now;
             this.firstName = firstName;
             this.lastName = lastName;
-            this.dateOfBirth = dateOfBirth;
+            this.dateOfBirth = dateOfBirth.Date;
             this.Attribute = attribute;
             this.department = department;
             this.firstDepartment = firstDepartment;

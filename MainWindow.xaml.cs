@@ -5,6 +5,7 @@ using System.Windows;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Xml.Serialization;
+using static DepartmentsRepository_WPF.EmployeConverter;
 
 namespace DepartmentsRepository_WPF
 {
@@ -15,7 +16,6 @@ namespace DepartmentsRepository_WPF
     {
         DepartmentsRepository departmentsRepository;
         const string JSON_FILE_NAME = "departmentsRepository.json";
-        //const string XML_FILE_NAME = "departmentsRepository.xml";
 
         public MainWindow()
         {
@@ -211,7 +211,7 @@ namespace DepartmentsRepository_WPF
 
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
-                    (lvEmployes.SelectedItem as Employe).Department_.RemoveEmploye(lvEmployes.SelectedItem as Employe);
+                    (trvDepartments.SelectedItem as Department).RemoveEmploye(lvEmployes.SelectedItem as Employe);
                 }
             }
             else
@@ -252,33 +252,29 @@ namespace DepartmentsRepository_WPF
             if (!System.IO.File.Exists(JSON_FILE_NAME)) MessageBox.Show("You havnt file to download, first - save something.");
             else
             {
-                //var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto };
                 string json = System.IO.File.ReadAllText(JSON_FILE_NAME);
-                //this.departmentsRepository.Departments = JsonConvert.DeserializeObject<ObservableCollection<Department>>(json, settings);
 
-                JsonSerializerOptions options = new JsonSerializerOptions()
+                var options = new JsonSerializerOptions()
                 {
-                    //PropertyNameCaseInsensitive = true,
                     ReferenceHandler = ReferenceHandler.Preserve,
                     WriteIndented = true,
-                    IncludeFields = true,
+                    Converters = {
+                        //new EmployeConverter(),
+                        new BaseClassConverter(),
+                        new JsonStringEnumConverter() }
                 };
+                this.departmentsRepository = JsonSerializer.Deserialize<DepartmentsRepository>(json, options);
 
+                //var settings = new Newtonsoft.Json.JsonSerializerSettings
+                //{
+                //    TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Objects,
+                //    Formatting = Newtonsoft.Json.Formatting.Indented,
+                //    //ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize
+                //};
+                //this.departmentsRepository = Newtonsoft.Json.JsonConvert.DeserializeObject<DepartmentsRepository>(json, settings);
 
-                this.departmentsRepository.Departments = JsonSerializer.Deserialize<ObservableCollection<Department>>(json, options);
-                
                 trvDepartments.ItemsSource = this.departmentsRepository.Departments;
-                if (departmentsRepository.Departments.Count != 0)
-                { this.departmentsRepository.FirstDepartment = departmentsRepository.Departments[0]; }
             }
-            //if (!System.IO.File.Exists(XML_FILE_NAME)) MessageBox.Show("You havnt file to download, first - save something.");
-            //else
-            //{
-
-
-            //}
-
-
         }
 
         /// <summary>
@@ -288,28 +284,27 @@ namespace DepartmentsRepository_WPF
         /// <param name="e"></param>
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            //var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto };
-            //string json = JsonConvert.SerializeObject(this.departmentsRepository.Departments, typeof(ObservableCollection<Department>), settings);
-
-
-            JsonSerializerOptions options = new JsonSerializerOptions()
+            var options = new JsonSerializerOptions()
             {
                 ReferenceHandler = ReferenceHandler.Preserve,
                 WriteIndented = true,
-                IncludeFields = true,
+                Converters = {
+                        //new EmployeConverter(),
+                        new BaseClassConverter(),
+                        //new TypeDiscriminatorConverter<Employe>(),
+                        new JsonStringEnumConverter() }
             };
+            string json = JsonSerializer.Serialize<object>(this.departmentsRepository, options);
 
-            string json = JsonSerializer.Serialize(this.departmentsRepository.Departments, 
-                typeof(ObservableCollection<Department>), options);
+            //var settings = new Newtonsoft.Json.JsonSerializerSettings
+            //{
+            //    TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Objects,
+            //    Formatting = Newtonsoft.Json.Formatting.Indented,
+            //    //ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize
+            //};
+            //string json = Newtonsoft.Json.JsonConvert.SerializeObject(this.departmentsRepository, settings);
+
             System.IO.File.WriteAllText(JSON_FILE_NAME, json);
-
-            //XmlSerializer xmlSerializer = new XmlSerializer(typeof(DepartmentsRepository));
-
-            //Stream fStream = new FileStream(XML_FILE_NAME, FileMode.Create, FileAccess.Write);
-
-            //xmlSerializer.Serialize(fStream, this.departmentsRepository);
-
-            //fStream.Close();
         }
 
         /// <summary>

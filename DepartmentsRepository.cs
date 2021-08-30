@@ -36,8 +36,9 @@ namespace DepartmentsRepository_WPF
         /// <param name="departmentName"></param>
         public void CreateFirstDepartment(string departmentName)
         {
-            this.firstDepartment = new Department(departmentName);
-            this.Departments.Add(this.firstDepartment);
+            Department department = new Department(departmentName);
+            this.Departments.Add(department);
+            this.firstDepartment = department;
         }
 
         /// <summary>

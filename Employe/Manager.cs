@@ -94,6 +94,7 @@ namespace DepartmentsRepository_WPF
             for (int i = 0; i < lengthOfDepartments; i++)
             {
                 salaryOfEmployes += GetSalaryOfEmployes(department.Departments[i]);
+                //if (i == 0) salaryOfEmployes -= department.Departments[i].GetHeadOfDepartment(department.Departments[i]).Salary;
             }
 
             for (int j = 0; j < lengthOfEmloyes; j++)

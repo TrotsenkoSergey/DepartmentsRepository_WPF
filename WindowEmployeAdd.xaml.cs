@@ -16,7 +16,6 @@ namespace DepartmentsRepository_WPF
             this.departmentsRepository = departmentsRepository;
             ObservableCollection<Department> departments = new ObservableCollection<Department>();
             ObservableCollection<EmployeAttribute> employeAttributes = new ObservableCollection<EmployeAttribute>();
-            // don't know how to get Enum easier ("Enum.GetValues(EmployeAttribute)" didnt work)
             
             if (departmentsRepository.FirstDepartment.GetDirector(departmentsRepository.FirstDepartment) == null ||
                 departmentsRepository.FirstDepartment.GetDeputyDirector(departmentsRepository.FirstDepartment) == null)
