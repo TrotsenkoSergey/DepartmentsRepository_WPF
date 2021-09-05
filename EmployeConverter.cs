@@ -89,19 +89,19 @@ namespace DepartmentsRepository_WPF
                             DateTime dateOfBirth = reader.GetDateTime();
                             employe.DateOfBirth = dateOfBirth;
                             break;
-                        //case "Department":
-                        //    var department = reader.
-                        //    department = typeof(Department);
-                        //    employe.Department = department;
-                        //    break;
+                        case "Department":
+                            //var department = reader.Get
+                            //department = typeof(Department);
+                            //employe.Department = department;
+                            //break;
                         case "Salary":
                             double salary = reader.GetDouble();
                             employe.Salary = salary;
                             break;
-                        case "Attribute":
-                            EmployeAttribute attribute = (EmployeAttribute)reader.GetInt32();
-                            employe.Attribute = attribute;
-                            break;
+                        //case "Attribute":
+                        //    EmployeAttribute attribute = (EmployeAttribute)reader.GetInt32();
+                        //    employe.Attribute = attribute;
+                        //    break;
                     }
                 }
             }

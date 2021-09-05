@@ -75,8 +75,6 @@ namespace DepartmentsRepository_WPF
             }
         }
 
-        public Department This => this;
-
         /// <summary>
         /// Department constructor.
         /// </summary>

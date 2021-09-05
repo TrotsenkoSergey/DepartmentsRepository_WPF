@@ -260,7 +260,7 @@ namespace DepartmentsRepository_WPF
                     WriteIndented = true,
                     Converters = {
                         //new EmployeConverter(),
-                        new BaseClassConverter(),
+                        //new BaseClassConverter(),
                         new JsonStringEnumConverter() }
                 };
                 this.departmentsRepository = JsonSerializer.Deserialize<DepartmentsRepository>(json, options);
@@ -290,7 +290,7 @@ namespace DepartmentsRepository_WPF
                 WriteIndented = true,
                 Converters = {
                         //new EmployeConverter(),
-                        new BaseClassConverter(),
+                        //new BaseClassConverter(),
                         //new TypeDiscriminatorConverter<Employe>(),
                         new JsonStringEnumConverter() }
             };
