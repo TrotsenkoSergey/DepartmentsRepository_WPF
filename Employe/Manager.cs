@@ -47,14 +47,11 @@ namespace DepartmentsRepository_WPF
         /// </summary>
         public override double Salary
         {
-            get
-            {               
-                return this.salary;
-            }
+            get => salary;
             set 
             {
                 double salaryRatio = default;
-                double minSalary = default;
+                double minSalary = value;
 
                 if (this.Attribute == EmployeAttribute.Director)
                 {
@@ -72,7 +69,7 @@ namespace DepartmentsRepository_WPF
                     minSalary = HEAD_OF_DEPARTMENT_MIN_SALARY;
                 }
 
-                double salary = GetSalaryOfEmployes(this.department) * salaryRatio;
+                double salary = GetSalaryOfEmployes(this.Department) * salaryRatio;
                 salary = (salary < minSalary) ? minSalary : salary;
                 this.salary = Math.Round(salary, 2);
                 
@@ -89,7 +86,7 @@ namespace DepartmentsRepository_WPF
         {
             double salaryOfEmployes = default;
             int lengthOfDepartments = department.Departments.Count;
-            int lengthOfEmloyes = department.Employes.Count;
+            int lengthOfEmployes = department.Employes.Count;
 
             for (int i = 0; i < lengthOfDepartments; i++)
             {
@@ -97,7 +94,7 @@ namespace DepartmentsRepository_WPF
                 //if (i == 0) salaryOfEmployes -= department.Departments[i].GetHeadOfDepartment(department.Departments[i]).Salary;
             }
 
-            for (int j = 0; j < lengthOfEmloyes; j++)
+            for (int j = 0; j < lengthOfEmployes; j++)
             {
                 salaryOfEmployes += department.Employes[j].Salary; 
             }

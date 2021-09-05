@@ -14,7 +14,6 @@ namespace DepartmentsRepository_WPF
                                                      // to change the values ​​of the TreeView.Item property       
     {
 
-        private DateTime creationTime;
         private string departmentName;
         private ObservableCollection<Employe> employes;
         private ObservableCollection<Department> departments;
@@ -24,21 +23,14 @@ namespace DepartmentsRepository_WPF
         /// <summary>
         /// Date the department was added to the repository.
         /// </summary>
-        public DateTime CreationTime
-        {
-            get { return this.creationTime; }
-            set { creationTime = value; }
-        }
+        public DateTime CreationTime { get; set; }
 
         /// <summary>
         /// Department name.
         /// </summary>
         public string DepartmentName
         {
-            get
-            {
-                return this.departmentName;
-            }
+            get => this.departmentName;
             set
             {
                 this.departmentName = value;
@@ -51,7 +43,7 @@ namespace DepartmentsRepository_WPF
         /// </summary>
         public ObservableCollection<Employe> Employes
         {
-            get { return this.employes; }
+            get => this.employes;
             set
             {
                 this.employes = value;
@@ -64,10 +56,7 @@ namespace DepartmentsRepository_WPF
         /// </summary>
         public ObservableCollection<Department> Departments
         {
-            get
-            {
-                return this.departments;
-            }
+            get => this.departments;
             set
             {
                 this.departments = value;
@@ -81,7 +70,7 @@ namespace DepartmentsRepository_WPF
         /// <param name="departmentName"></param>
         public Department(string departmentName)
         {
-            this.creationTime = DateTime.Now;
+            this.CreationTime = DateTime.Now;
             this.departmentName = departmentName;
             this.employes = new ObservableCollection<Employe>();
             this.Departments = new ObservableCollection<Department>();
@@ -166,14 +155,12 @@ namespace DepartmentsRepository_WPF
         /// <returns></returns>
         public ObservableCollection<Department> GetListOfDepartments(Department concreteDepartment)
         {
-            ObservableCollection<Department> listOfDepartments = new ObservableCollection<Department>();
-            ObservableCollection<Department> tempListOfDepartments = new ObservableCollection<Department>();
-
+            var listOfDepartments = new ObservableCollection<Department>();
+            
             int i = concreteDepartment.Departments.Count;
-
             for (--i; i >= 0; i--)
             {
-                tempListOfDepartments = GetListOfDepartments(concreteDepartment.Departments[i]);
+                var tempListOfDepartments = GetListOfDepartments(concreteDepartment.Departments[i]);
                 foreach (Department department in tempListOfDepartments)
                 {
                     listOfDepartments.Add(department);

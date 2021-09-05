@@ -31,9 +31,21 @@ namespace DepartmentsRepository_WPF
         /// <param name="e"></param>
         private void CreateDepartment_Click(object sender, RoutedEventArgs e)
         {
-            Window windowDepartmentCreation = new WindowDepartmentCreation(this.departmentsRepository);
+            var windowDepartmentCreation = new WindowDepartmentCreation(departmentsRepository);
             windowDepartmentCreation.Owner = this;
-            windowDepartmentCreation.ShowDialog();
+
+            if ((bool)windowDepartmentCreation.ShowDialog())
+            {
+                if (departmentsRepository.FirstDepartment == null)
+                {
+                    departmentsRepository.CreateFirstDepartment(windowDepartmentCreation.tbDepName.Text);
+                }
+                else
+                {
+                    departmentsRepository.CreateNewDepartment(windowDepartmentCreation.tbDepName.Text, 
+                        windowDepartmentCreation.cbWinDep.SelectedItem as Department);
+                }
+            }
         }
 
         /// <summary>
@@ -45,7 +57,7 @@ namespace DepartmentsRepository_WPF
         {
             if (trvDepartments.SelectedItem is Department)
             {
-                Window windowDepartmentRename = new WindowDepartmentRename(this.departmentsRepository, trvDepartments.SelectedItem as Department);
+                Window windowDepartmentRename = new WindowDepartmentRename(trvDepartments.SelectedItem as Department);
                 windowDepartmentRename.Owner = this;
                 windowDepartmentRename.ShowDialog();
             }
@@ -187,7 +199,7 @@ namespace DepartmentsRepository_WPF
         {
             if (lvEmployes.SelectedItem is Employe)
             {
-                Window windowEmployeRename = new WindowEmployeRename(this.departmentsRepository, lvEmployes.SelectedItem as Employe);
+                Window windowEmployeRename = new WindowEmployeRename(lvEmployes.SelectedItem as Employe);
                 windowEmployeRename.Owner = this;
                 windowEmployeRename.ShowDialog();
             }
