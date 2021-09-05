@@ -98,10 +98,10 @@ namespace DepartmentsRepository_WPF
                             double salary = reader.GetDouble();
                             employe.Salary = salary;
                             break;
-                        //case "Attribute":
-                        //    EmployeAttribute attribute = (EmployeAttribute)reader.GetInt32();
-                        //    employe.Attribute = attribute;
-                        //    break;
+                        case "Attribute":
+                            EmployeAttribute attribute = (EmployeAttribute)reader.GetInt32();
+                            employe.Attribute = attribute;
+                            break;
                     }
                 }
             }

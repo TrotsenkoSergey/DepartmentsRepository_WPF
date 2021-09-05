@@ -5,18 +5,16 @@ namespace DepartmentsRepository_WPF
     /// <summary>
     /// Interaction logic for WindowDepartmentCreation.xaml
     /// </summary>
-    public partial class WindowDepartmentCreation : Window
+    public partial class WindowDepartmentCreation
     {
-        DepartmentsRepository departmentsRepository;
 
         public WindowDepartmentCreation(DepartmentsRepository departmentsRepository)
         {
             InitializeComponent();
-            this.departmentsRepository = departmentsRepository;
-            if (this.departmentsRepository.FirstDepartment != null)
+            if (departmentsRepository.FirstDepartment != null)
             {
-                cbWinDep.ItemsSource = this.departmentsRepository.FirstDepartment.GetListOfDepartments(this.departmentsRepository.FirstDepartment);
-                cbWinDep.SelectedValue = this.departmentsRepository.FirstDepartment; /* for the convenience of the user
+                cbWinDep.ItemsSource = departmentsRepository.FirstDepartment.GetListOfDepartments(departmentsRepository.FirstDepartment);
+                cbWinDep.SelectedValue = departmentsRepository.FirstDepartment; /* for the convenience of the user
                                                                                       * and avoiding the exclusion of the absence
                                                                                       * of a choice of department for creating a new */
             }
@@ -24,21 +22,14 @@ namespace DepartmentsRepository_WPF
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (this.departmentsRepository.IsCorrectName(tbDepName.Text))
+            if (DepartmentsRepository.IsCorrectName(tbDepName.Text, out string error))
             {
-                if (this.departmentsRepository.FirstDepartment == null)
-                {
-                    departmentsRepository.CreateFirstDepartment(tbDepName.Text);
-                }
-                else
-                {
-                    departmentsRepository.CreateNewDepartment(tbDepName.Text, cbWinDep.SelectedItem as Department);
-                }
+                DialogResult = true;
                 Close();
             }
             else
             {
-                MessageBox.Show(DepartmentsRepository.INVALID_NAME);
+                MessageBox.Show($"Department name {error}");
             }
         }
     }

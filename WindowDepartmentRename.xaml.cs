@@ -7,26 +7,24 @@ namespace DepartmentsRepository_WPF
     /// </summary>
     public partial class WindowDepartmentRename : Window
     {
-        DepartmentsRepository departmentsRepository;
-        Department concreteDepartment;
+        private readonly Department concreteDepartment;
 
-        public WindowDepartmentRename(DepartmentsRepository departmentsRepository, Department concreteDepartment)
+        public WindowDepartmentRename(Department concreteDepartment)
         {
             InitializeComponent();
-            this.departmentsRepository = departmentsRepository;
             this.concreteDepartment = concreteDepartment;
         }
 
         private void Rename_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (this.departmentsRepository.IsCorrectName(tbDepName.Text))
+            if (DepartmentsRepository.IsCorrectName(tbDepName.Text, out string error))
             {
                 concreteDepartment.DepartmentName = tbDepName.Text;
                 Close();
             }
             else
             {
-                MessageBox.Show(DepartmentsRepository.INVALID_NAME);
+                MessageBox.Show($"Department name {error}");
             }
         }
     }

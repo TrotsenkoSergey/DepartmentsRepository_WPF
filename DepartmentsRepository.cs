@@ -9,13 +9,11 @@ namespace DepartmentsRepository_WPF
     /// </summary>
     public class DepartmentsRepository
     {
-        
-        private Department firstDepartment;
 
         /// <summary>
         /// Main (first) department.
         /// </summary>
-        public Department FirstDepartment { get { return this.firstDepartment; } set { this.firstDepartment = value; } }
+        public Department FirstDepartment { get; set; }
 
         /// <summary>
         /// A collection with a link to the main (first) department (for binding to a TreeView).
@@ -25,7 +23,7 @@ namespace DepartmentsRepository_WPF
         /// <summary>
         /// Constructor.
         /// </summary>
-        public DepartmentsRepository() 
+        public DepartmentsRepository()
         {
             Departments = new ObservableCollection<Department>();
         }
@@ -36,9 +34,8 @@ namespace DepartmentsRepository_WPF
         /// <param name="departmentName"></param>
         public void CreateFirstDepartment(string departmentName)
         {
-            Department department = new Department(departmentName);
-            this.Departments.Add(department);
-            this.firstDepartment = department;
+            FirstDepartment = new Department(departmentName);
+            Departments.Add(FirstDepartment);
         }
 
         /// <summary>
@@ -73,41 +70,52 @@ namespace DepartmentsRepository_WPF
         /// <summary>
         /// Getting a specific department by its name.
         /// </summary>
-        /// <param name="concreteDepartment"></param>
+        /// <param name="firstDepartment"></param>
         /// <param name="departmentName"></param>
         /// <returns></returns>
-        public Department GetConcreteDepartmentByName(Department concreteDepartment, string departmentName)
+        public Department GetConcreteDepartmentByName(string departmentName, Department firstDepartment)
         {
-            int length = concreteDepartment.Departments.Count;
+            int length = firstDepartment.Departments.Count;
             for (int i = 0; i < length; i++)
             {
-                GetConcreteDepartmentByName(concreteDepartment.Departments[i], departmentName);
+                GetConcreteDepartmentByName(departmentName, firstDepartment.Departments[i]);
             }
-            if (concreteDepartment.DepartmentName.Contains(departmentName)) return concreteDepartment;
-            else return null;
-        }
 
-        public const string INVALID_NAME = "Invalid value entered. The name must contain only letters, at least '4'. Try again.";
+            return firstDepartment.DepartmentName.Contains(departmentName) ? firstDepartment : null;
+        }
 
         /// <summary>
         /// Checking the name for correctness.
         /// </summary>
         /// <param name="name"></param>
+        /// <param name="error"></param>
         /// <returns></returns>
-        public bool IsCorrectName(string name)
+        public static bool IsCorrectName(string name, out string error)
         {
-            bool isVarCorrect = false;
-            if (String.IsNullOrEmpty(name)) return false;
-            
-            char[] nameChar = name.ToCharArray();
-            if (nameChar.Length < 4) return false;
+            if (String.IsNullOrEmpty(name))
+            {
+                error = "is empty";
+                return false;
+            }
 
+            if (name.Length < 4)
+            {
+                error = "is invalid, less then four letters";
+                return false;
+            }
+
+            char[] nameChar = name.ToCharArray();
             foreach (char element in nameChar)
             {
-                isVarCorrect = Char.IsLetter(element);
-                if (!isVarCorrect) break;
+                if (!Char.IsLetter(element))
+                {
+                    error = "incorrect, consists not only of letters";
+                    return false;
+                }
             }
-            return isVarCorrect;
+
+            error = "is correct";
+            return true;
         }
     }
 }

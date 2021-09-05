@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 
 namespace DepartmentsRepository_WPF
@@ -7,15 +9,17 @@ namespace DepartmentsRepository_WPF
     /// <summary>
     /// Interaction logic for WindowEmployeAdd.xaml
     /// </summary>
-    public partial class WindowEmployeAdd : Window
+    public partial class WindowEmployeAdd
     {
-        DepartmentsRepository departmentsRepository;
+        private readonly DepartmentsRepository departmentsRepository;
+
         public WindowEmployeAdd(DepartmentsRepository departmentsRepository)
         {
             InitializeComponent();
             this.departmentsRepository = departmentsRepository;
-            ObservableCollection<Department> departments = new ObservableCollection<Department>();
-            ObservableCollection<EmployeAttribute> employeAttributes = new ObservableCollection<EmployeAttribute>();
+
+            var departments = new ObservableCollection<Department>();
+            var employeAttributes = new List<EmployeAttribute>();
             
             if (departmentsRepository.FirstDepartment.GetDirector(departmentsRepository.FirstDepartment) == null ||
                 departmentsRepository.FirstDepartment.GetDeputyDirector(departmentsRepository.FirstDepartment) == null)
@@ -38,26 +42,31 @@ namespace DepartmentsRepository_WPF
                 departments.Remove(this.departmentsRepository.FirstDepartment);
                 cbDepartments.ItemsSource = departments;
                 cbDepartments.SelectedValue = departments[0];
+                
+                //employeAttributes.Add(EmployeAttribute.Head_Of_Department);
+                //employeAttributes.Add(EmployeAttribute.Worker);
+                //employeAttributes.Add(EmployeAttribute.Intern);
 
-                employeAttributes.Add(EmployeAttribute.Head_Of_Department);
-                employeAttributes.Add(EmployeAttribute.Worker);
-                employeAttributes.Add(EmployeAttribute.Intern);
-
-                cbAttribute.ItemsSource = employeAttributes;
+                cbAttribute.ItemsSource = Enum.GetNames(typeof(EmployeAttribute));
                 cbAttribute.SelectedItem = EmployeAttribute.Worker;
             }
         }
 
         private void Button_AddEmploye(object sender, RoutedEventArgs e)
         {
-            if (!(dpDatePicker.SelectedDate is DateTime) || 
-                !this.departmentsRepository.IsCorrectName(tbEmployeFirstName.Text) || !this.departmentsRepository.IsCorrectName(tbEmployeLastName.Text))
+            
+            if (!DepartmentsRepository.IsCorrectName(tbEmployeFirstName.Text, out string error) | 
+                !DepartmentsRepository.IsCorrectName(tbEmployeLastName.Text, out string error2))
             {
-                MessageBox.Show($"You must first fill out the form. \nOR \n{DepartmentsRepository.INVALID_NAME}");
+                MessageBox.Show($"Firstname {error}, lastname {error2}.");
+            }
+            else if (!(dpDatePicker.SelectedDate is DateTime))
+            {
+                MessageBox.Show($"invalid Date of birth");
             }
             else
             {
-                if ((cbDepartments.SelectedValue as Department) != this.departmentsRepository.FirstDepartment &&
+                if (cbDepartments.SelectedValue as Department != this.departmentsRepository.FirstDepartment &&
                     (cbDepartments.SelectedValue as Department).GetHeadOfDepartment(cbDepartments.SelectedValue as Department) == null &&
                     (EmployeAttribute)cbAttribute.SelectedValue != EmployeAttribute.Head_Of_Department)
                 {

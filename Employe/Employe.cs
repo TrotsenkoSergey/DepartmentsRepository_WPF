@@ -6,37 +6,58 @@ using System.Text.Json.Serialization;
 namespace DepartmentsRepository_WPF
 {
     /// <summary>
-    /// Employe entity abstract class.
+    ///     Employe entity abstract class.
     /// </summary>
     public abstract class Employe : INotifyPropertyChanged // the specified interface gives us the ability
-                                                                                            // to change the values ​​of the ListView.Item property       
+        // to change the values ​​of the ListView.Item property       
     {
-        protected private DateTime creationTime;
-        protected private string firstName;
-        protected private string lastName;
-        protected private DateTime dateOfBirth;
-        protected private Department department;
-        protected private Department firstDepartment;
-        protected private double salary;
+        private protected DateTime dateOfBirth;
+        private protected Department firstDepartment;
+        private protected string firstName;
+        private protected string lastName;
+        private protected double salary;
 
-        /// <summary>
-        /// Time to add to the list.
-        /// </summary>
-        public DateTime CreationTime
+        private protected Employe()
         {
-            get { return this.creationTime; }
-            set { creationTime = value; }
         }
 
         /// <summary>
-        /// First name.
+        ///     Constructor.
+        /// </summary>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="dateOfBirth"></param>
+        /// <param name="attribute"></param>
+        /// <param name="department"></param>
+        /// <param name="firstDepartment"></param>
+        private protected Employe(string firstName, string lastName, DateTime dateOfBirth, EmployeAttribute attribute,
+            Department department, Department firstDepartment)
+        {
+            CreationTime = DateTime.Now;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.dateOfBirth = dateOfBirth.Date;
+            Attribute = attribute;
+            this.Department = department;
+            this.firstDepartment = firstDepartment;
+            Salary = default;
+        }
+
+        /// <summary>
+        ///     Time to add to the list.
+        /// </summary>
+        public virtual DateTime CreationTime
+        { get ; set ; }
+
+        /// <summary>
+        ///     First name.
         /// </summary>
         public virtual string FirstName
         {
-            get { return this.firstName; }
+            get => firstName;
             set
             {
-                this.firstName = value;
+                firstName = value;
                 FullName = default; // using Interface INotifyPropertyChanged
                 OnPropertyChanged(); // using Interface INotifyPropertyChanged
             }
@@ -48,88 +69,55 @@ namespace DepartmentsRepository_WPF
         /// </summary>
         public virtual string FullName
         {
-            get
-            {
-                return $"{this.lastName} {this.firstName}";
-            }
-            set
-            {
-                OnPropertyChanged(); // using Interface INotifyPropertyChanged
-            }
+            get => $"{lastName} {firstName}";
+            set => OnPropertyChanged(); // using Interface INotifyPropertyChanged
         }
 
         /// <summary>
-        /// Last name.
+        ///     Last name.
         /// </summary>
         public virtual string LastName
         {
-            get { return this.lastName; }
+            get => lastName;
             set
             {
-                this.lastName = value;
+                lastName = value;
                 FullName = default; // using Interface INotifyPropertyChanged
                 OnPropertyChanged(); // using Interface INotifyPropertyChanged
             }
         }
 
         /// <summary>
-        /// Date of birth.
+        ///     Date of birth.
         /// </summary>
         public DateTime DateOfBirth
         {
-            get { return this.dateOfBirth; }
-            set { dateOfBirth = value; }
+            get => dateOfBirth;
+            set => dateOfBirth = value;
         }
 
         /// <summary>
-        /// Department to which the employee is attached.
+        ///     Department to which the employee is attached.
         /// </summary>
         public virtual Department Department
-        {
-            get { return this.department; }
-            set { department = value; }
-        }
+        { get ; set ;}
 
         /// <summary>
-        /// Salary.
+        ///     Salary.
         /// </summary>
         public virtual double Salary { get; set; }
 
         /// <summary>
-        /// Position.
+        ///     Position.
         /// </summary>
         public virtual EmployeAttribute Attribute { get; set; }
-
-        public Employe() { }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="firstName"></param>
-        /// <param name="lastName"></param>
-        /// <param name="dateOfBirth"></param>
-        /// <param name="attribute"></param>
-        /// <param name="department"></param>
-        /// <param name="firstDepartment"></param>
-        public Employe(string firstName, string lastName, DateTime dateOfBirth, EmployeAttribute attribute, Department department, Department firstDepartment)
-        {
-            this.creationTime = DateTime.Now;
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.dateOfBirth = dateOfBirth.Date;
-            this.Attribute = attribute;
-            this.department = department;
-            this.firstDepartment = firstDepartment;
-            this.Salary = default;
-        }
 
         // below, interface INotifyPropertyChanged implementation 
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
     }
 }
