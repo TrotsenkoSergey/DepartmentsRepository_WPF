@@ -11,10 +11,10 @@ namespace DepartmentsRepository_WPF
         public WindowDepartmentCreation(DepartmentsRepository departmentsRepository)
         {
             InitializeComponent();
-            if (departmentsRepository.FirstDepartment != null)
+            if (DepartmentsRepository.MainDepartment != null)
             {
-                cbWinDep.ItemsSource = departmentsRepository.FirstDepartment.GetListOfDepartments(departmentsRepository.FirstDepartment);
-                cbWinDep.SelectedValue = departmentsRepository.FirstDepartment; /* for the convenience of the user
+                cbWinDep.ItemsSource = DepartmentsRepository.MainDepartment.GetListOfDepartments(DepartmentsRepository.MainDepartment);
+                cbWinDep.SelectedValue = DepartmentsRepository.MainDepartment; /* for the convenience of the user
                                                                                       * and avoiding the exclusion of the absence
                                                                                       * of a choice of department for creating a new */
             }

@@ -4,15 +4,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="DepartmentsApp" Icon="Department.png" Height="350" Width="400" WindowStartupLocation="CenterOwner">
+        Title="DepartmentsApp" Icon="Department.png" Height="250" Width="400" WindowStartupLocation="CenterOwner">
     <Grid>
         <GroupBox Header="Employe rename window" Margin="10" Padding="10">
             <StackPanel>
-                <TextBlock TextWrapping="Wrap" FontStretch="Expanded" FontWeight="Bold" Text="If you do not fill in some fields, the program will keep the previous value."></TextBlock>
-                <TextBlock TextWrapping="Wrap" FontStretch="Expanded" FontWeight="Bold" Text="Also, there will be no changes in the case of an incorrect name format (at least 4 letters, excluding other characters)."></TextBlock>
-                <TextBlock Margin="0 10">Write new employe First name:</TextBlock>
+                <TextBlock >Write employe new First name:</TextBlock>
                 <TextBox x:Name="tbEmployeFirstName"/>
-                <TextBlock>Write new employe Last name:</TextBlock>
+                <TextBlock Margin="0  10 0 0">Write employe new Last name:</TextBlock>
                 <TextBox x:Name="tbEmployeLastName"/>
                 <Button Margin="0 20" Click="Rename_Button_Click" >Rename Employe</Button>
             </StackPanel>

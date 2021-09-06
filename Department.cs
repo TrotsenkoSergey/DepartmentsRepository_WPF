@@ -17,8 +17,12 @@ namespace DepartmentsRepository_WPF
         private string departmentName;
         private ObservableCollection<Employe> employes;
         private ObservableCollection<Department> departments;
-
-        public Department() { }
+       
+        public Department()
+        {
+            this.employes = new ObservableCollection<Employe>();
+            this.Departments = new ObservableCollection<Department>();
+        }
 
         /// <summary>
         /// Date the department was added to the repository.
@@ -34,6 +38,11 @@ namespace DepartmentsRepository_WPF
             set
             {
                 this.departmentName = value;
+                if (Employes.Count != 0)
+                    foreach (Employe employe in Employes)
+                    {
+                        employe.DepName = DepartmentName;
+                    }
                 OnPropertyChanged(); // using Interface INotifyPropertyChanged
             }
         }
@@ -68,12 +77,10 @@ namespace DepartmentsRepository_WPF
         /// Department constructor.
         /// </summary>
         /// <param name="departmentName"></param>
-        public Department(string departmentName)
+        public Department(string departmentName) : this()
         {
             this.CreationTime = DateTime.Now;
             this.departmentName = departmentName;
-            this.employes = new ObservableCollection<Employe>();
-            this.Departments = new ObservableCollection<Department>();
         }
 
         /// <summary>
@@ -89,9 +96,9 @@ namespace DepartmentsRepository_WPF
             EmployeAttribute attribute, Department department, Department firstDepartment)
         {
             if ((int)attribute <= 2) this.Employes.Add(new Manager(firstName, lastName,
-                dateOfBirth, attribute, department, firstDepartment));
+                dateOfBirth, attribute, department));
             else this.Employes.Add(new Worker(firstName, lastName, dateOfBirth,
-                attribute, department, firstDepartment));
+                attribute, department));
         }
 
         /// <summary>
@@ -184,7 +191,7 @@ namespace DepartmentsRepository_WPF
 
             foreach (var department in departments)
             {
-                if (department == childDepartment)
+                if (department.departmentName == childDepartment.departmentName)
                 {
                     return parentDepartment;
                 }

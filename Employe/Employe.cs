@@ -9,15 +9,15 @@ namespace DepartmentsRepository_WPF
     ///     Employe entity abstract class.
     /// </summary>
     public abstract class Employe : INotifyPropertyChanged // the specified interface gives us the ability
-        // to change the values ​​of the ListView.Item property       
+                                                           // to change the values ​​of the ListView.Item property       
     {
         private protected DateTime dateOfBirth;
-        private protected Department firstDepartment;
         private protected string firstName;
         private protected string lastName;
+        private protected string depName;
         private protected double salary;
 
-        private protected Employe()
+        public Employe()
         {
         }
 
@@ -31,23 +31,21 @@ namespace DepartmentsRepository_WPF
         /// <param name="department"></param>
         /// <param name="firstDepartment"></param>
         private protected Employe(string firstName, string lastName, DateTime dateOfBirth, EmployeAttribute attribute,
-            Department department, Department firstDepartment)
+            Department department)
         {
             CreationTime = DateTime.Now;
             this.firstName = firstName;
             this.lastName = lastName;
             this.dateOfBirth = dateOfBirth.Date;
             Attribute = attribute;
-            this.Department = department;
-            this.firstDepartment = firstDepartment;
+            DepName = department.DepartmentName;
             Salary = default;
         }
 
         /// <summary>
         ///     Time to add to the list.
         /// </summary>
-        public virtual DateTime CreationTime
-        { get ; set ; }
+        public virtual DateTime CreationTime { get; set; }
 
         /// <summary>
         ///     First name.
@@ -99,18 +97,25 @@ namespace DepartmentsRepository_WPF
         /// <summary>
         ///     Department to which the employee is attached.
         /// </summary>
-        public virtual Department Department
-        { get ; set ;}
-
-        /// <summary>
-        ///     Salary.
-        /// </summary>
-        public virtual double Salary { get; set; }
+        public virtual string DepName
+        {
+            get => depName;
+            set
+            {
+                depName = value;
+                OnPropertyChanged();
+            }
+        }
 
         /// <summary>
         ///     Position.
         /// </summary>
         public virtual EmployeAttribute Attribute { get; set; }
+
+        /// <summary>
+        ///     Salary.
+        /// </summary>
+        public virtual double Salary { get; set; }
 
         // below, interface INotifyPropertyChanged implementation 
         public event PropertyChangedEventHandler PropertyChanged;

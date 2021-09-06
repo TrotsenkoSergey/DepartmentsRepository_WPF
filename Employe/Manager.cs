@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace DepartmentsRepository_WPF
 {
@@ -24,21 +25,21 @@ namespace DepartmentsRepository_WPF
         /// <param name="attribute"></param>
         /// <param name="department"></param>
         /// <param name="firstDepartment"></param>
-        public Manager(string firstName, string lastName, DateTime dateOfBirth, EmployeAttribute attribute, Department department, Department firstDepartment)
-             : base(firstName, lastName, dateOfBirth, attribute, department, firstDepartment)
+        public Manager(string firstName, string lastName, DateTime dateOfBirth, EmployeAttribute attribute, Department department)
+             : base(firstName, lastName, dateOfBirth, attribute, department)
         {
             if (attribute == EmployeAttribute.Head_Of_Department)
             {
                 Department parentDepartment = department;
-                while (parentDepartment != firstDepartment)
+                while (parentDepartment != DepartmentsRepository.MainDepartment)
                 {
-                    parentDepartment = parentDepartment.GetDepartmentAncestor(parentDepartment, firstDepartment);
-                    if (parentDepartment != firstDepartment)
+                    parentDepartment = parentDepartment.GetDepartmentAncestor(parentDepartment, DepartmentsRepository.MainDepartment);
+                    if (parentDepartment != DepartmentsRepository.MainDepartment && parentDepartment.GetHeadOfDepartment(parentDepartment) != null)
                     { parentDepartment.GetHeadOfDepartment(parentDepartment).Salary = default; }
                 }
 
-                department.GetDeputyDirector(firstDepartment).Salary = default;
-                department.GetDirector(firstDepartment).Salary = default;
+                department.GetDeputyDirector(DepartmentsRepository.MainDepartment).Salary = default;
+                department.GetDirector(DepartmentsRepository.MainDepartment).Salary = default;
             }
         }
 
@@ -48,31 +49,39 @@ namespace DepartmentsRepository_WPF
         public override double Salary
         {
             get => salary;
-            set 
+            set
             {
                 double salaryRatio = default;
-                double minSalary = value;
+                double minSalary = default;
 
-                if (this.Attribute == EmployeAttribute.Director)
+                if (Attribute == EmployeAttribute.Director)
                 {
                     salaryRatio = DIRECTOR_SALARY_RATIO;
                     minSalary = DIRECTOR_MIN_SALARY;
                 }
-                else if (this.Attribute == EmployeAttribute.Deputy_Director)
+                else if (Attribute == EmployeAttribute.Deputy_Director)
                 {
                     salaryRatio = DEPUTY_DIRECTOR_SALARY_RATIO;
                     minSalary = DEPUTY_DIRECTOR_MIN_SALARY;
                 }
-                else if (this.Attribute == EmployeAttribute.Head_Of_Department)
+                else if (Attribute == EmployeAttribute.Head_Of_Department)
                 {
                     salaryRatio = HEAD_OF_DEPARTMENT_SALARY_RATIO;
                     minSalary = HEAD_OF_DEPARTMENT_MIN_SALARY;
                 }
 
-                double salary = GetSalaryOfEmployes(this.Department) * salaryRatio;
+                if (value == default)
+                {
+                    Department department =
+                        DepartmentsRepository.GetConcreteDepartmentByName(DepName,
+                            DepartmentsRepository.MainDepartment);
+                    double salary = GetSalaryOfEmployes(department) * salaryRatio;
+                }
+
+                if (value > 0) minSalary = value;
                 salary = (salary < minSalary) ? minSalary : salary;
-                this.salary = Math.Round(salary, 2);
-                
+                salary = Math.Round(salary, 2);
+
                 OnPropertyChanged(); // using Interface INotifyPropertyChanged
             }
         }
@@ -96,7 +105,7 @@ namespace DepartmentsRepository_WPF
 
             for (int j = 0; j < lengthOfEmployes; j++)
             {
-                salaryOfEmployes += department.Employes[j].Salary; 
+                salaryOfEmployes += department.Employes[j].Salary;
             }
             return salaryOfEmployes;
         }

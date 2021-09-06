@@ -21,14 +21,14 @@ namespace DepartmentsRepository_WPF
             var departments = new ObservableCollection<Department>();
             var employeAttributes = new List<EmployeAttribute>();
             
-            if (departmentsRepository.FirstDepartment.GetDirector(departmentsRepository.FirstDepartment) == null ||
-                departmentsRepository.FirstDepartment.GetDeputyDirector(departmentsRepository.FirstDepartment) == null)
+            if (DepartmentsRepository.MainDepartment.GetDirector(DepartmentsRepository.MainDepartment) == null ||
+                DepartmentsRepository.MainDepartment.GetDeputyDirector(DepartmentsRepository.MainDepartment) == null)
             {
-                departments.Add(this.departmentsRepository.FirstDepartment);
+                departments.Add(DepartmentsRepository.MainDepartment);
                 cbDepartments.ItemsSource = departments;
-                cbDepartments.SelectedValue = this.departmentsRepository.FirstDepartment;
+                cbDepartments.SelectedValue = DepartmentsRepository.MainDepartment;
 
-                if (departmentsRepository.FirstDepartment.GetDirector(departmentsRepository.FirstDepartment) == null)
+                if (DepartmentsRepository.MainDepartment.GetDirector(DepartmentsRepository.MainDepartment) == null)
                 { employeAttributes.Add(EmployeAttribute.Director); }
                 else
                 { employeAttributes.Add(EmployeAttribute.Deputy_Director); }
@@ -38,16 +38,16 @@ namespace DepartmentsRepository_WPF
             }
             else
             {
-                departments = this.departmentsRepository.FirstDepartment.GetListOfDepartments(this.departmentsRepository.FirstDepartment);
-                departments.Remove(this.departmentsRepository.FirstDepartment);
+                departments = DepartmentsRepository.MainDepartment.GetListOfDepartments(DepartmentsRepository.MainDepartment);
+                departments.Remove(DepartmentsRepository.MainDepartment);
                 cbDepartments.ItemsSource = departments;
                 cbDepartments.SelectedValue = departments[0];
                 
-                //employeAttributes.Add(EmployeAttribute.Head_Of_Department);
-                //employeAttributes.Add(EmployeAttribute.Worker);
-                //employeAttributes.Add(EmployeAttribute.Intern);
+                employeAttributes.Add(EmployeAttribute.Head_Of_Department);
+                employeAttributes.Add(EmployeAttribute.Worker);
+                employeAttributes.Add(EmployeAttribute.Intern);
 
-                cbAttribute.ItemsSource = Enum.GetNames(typeof(EmployeAttribute));
+                cbAttribute.ItemsSource = employeAttributes;
                 cbAttribute.SelectedItem = EmployeAttribute.Worker;
             }
         }
@@ -66,13 +66,13 @@ namespace DepartmentsRepository_WPF
             }
             else
             {
-                if (cbDepartments.SelectedValue as Department != this.departmentsRepository.FirstDepartment &&
+                if (cbDepartments.SelectedValue as Department != DepartmentsRepository.MainDepartment &&
                     (cbDepartments.SelectedValue as Department).GetHeadOfDepartment(cbDepartments.SelectedValue as Department) == null &&
                     (EmployeAttribute)cbAttribute.SelectedValue != EmployeAttribute.Head_Of_Department)
                 {
                     MessageBox.Show("You cannot add an worker or intern to a department while there is no Head in the department.");
                 }
-                else if ((cbDepartments.SelectedValue as Department) != this.departmentsRepository.FirstDepartment &&
+                else if ((cbDepartments.SelectedValue as Department) != DepartmentsRepository.MainDepartment &&
                     (cbDepartments.SelectedValue as Department).GetHeadOfDepartment(cbDepartments.SelectedValue as Department) != null &&
                     (EmployeAttribute)cbAttribute.SelectedValue == EmployeAttribute.Head_Of_Department)
                 {
@@ -83,7 +83,7 @@ namespace DepartmentsRepository_WPF
                     (cbDepartments.SelectedValue as Department).AddEmploye(tbEmployeFirstName.Text,
                             tbEmployeLastName.Text, (DateTime)dpDatePicker.SelectedDate,
                             (EmployeAttribute)cbAttribute.SelectedValue, cbDepartments.SelectedValue as Department,
-                            this.departmentsRepository.FirstDepartment);
+                            DepartmentsRepository.MainDepartment);
                     Close();
                 }
             }
