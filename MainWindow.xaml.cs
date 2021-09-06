@@ -1,11 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Xml.Serialization;
-using static DepartmentsRepository_WPF.EmployeConverter;
+using Microsoft.Win32;
 
 namespace DepartmentsRepository_WPF
 {
@@ -14,14 +11,13 @@ namespace DepartmentsRepository_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        DepartmentsRepository departmentsRepository;
-        const string JSON_FILE_NAME = "departmentsRepository.json";
+        private DepartmentsRepository departmentsRepository;
 
         public MainWindow()
         {
             InitializeComponent();
-            this.departmentsRepository = new DepartmentsRepository();
-            trvDepartments.ItemsSource = this.departmentsRepository.Departments;
+            departmentsRepository = new DepartmentsRepository();
+            trvDepartments.ItemsSource = departmentsRepository.Departments;
         }
 
         /// <summary>
@@ -36,13 +32,13 @@ namespace DepartmentsRepository_WPF
 
             if ((bool)windowDepartmentCreation.ShowDialog())
             {
-                if (departmentsRepository.FirstDepartment == null)
+                if (DepartmentsRepository.MainDepartment == null)
                 {
-                    departmentsRepository.CreateFirstDepartment(windowDepartmentCreation.tbDepName.Text);
+                    departmentsRepository.CreateMainDepartment(windowDepartmentCreation.tbDepName.Text);
                 }
                 else
                 {
-                    departmentsRepository.CreateNewDepartment(windowDepartmentCreation.tbDepName.Text, 
+                    departmentsRepository.CreateNewDepartment(windowDepartmentCreation.tbDepName.Text,
                         windowDepartmentCreation.cbWinDep.SelectedItem as Department);
                 }
             }
@@ -74,18 +70,18 @@ namespace DepartmentsRepository_WPF
         /// <param name="e"></param>
         private void RemoveDepartment_Click(object sender, RoutedEventArgs e)
         {
-            if (trvDepartments.SelectedItem is Department && (trvDepartments.SelectedItem as Department != this.departmentsRepository.FirstDepartment))
+            if (trvDepartments.SelectedItem is Department && (trvDepartments.SelectedItem as Department != DepartmentsRepository.MainDepartment))
             {
                 MessageBoxResult messageBoxResult = MessageBox.Show($"Are you sure to remove '{(trvDepartments.SelectedItem as Department).DepartmentName}' department?",
                     "Warning message", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
-                    this.departmentsRepository.FirstDepartment.GetDepartmentAncestor(trvDepartments.SelectedItem as Department, this.departmentsRepository.FirstDepartment).
+                    DepartmentsRepository.MainDepartment.GetDepartmentAncestor(trvDepartments.SelectedItem as Department, DepartmentsRepository.MainDepartment).
                         Departments.Remove(trvDepartments.SelectedItem as Department);
                 }
             }
-            else if (trvDepartments.SelectedItem is Department && (trvDepartments.SelectedItem as Department == this.departmentsRepository.FirstDepartment))
+            else if (trvDepartments.SelectedItem is Department && (trvDepartments.SelectedItem as Department == DepartmentsRepository.MainDepartment))
             {
                 MessageBox.Show("You cant remove Main department.");
             }
@@ -102,13 +98,13 @@ namespace DepartmentsRepository_WPF
         /// <param name="e"></param>
         private void AddEmploye_Click(object sender, RoutedEventArgs e)
         {
-            if (this.departmentsRepository == null || this.departmentsRepository.FirstDepartment == null)
+            if (this.departmentsRepository == null || DepartmentsRepository.MainDepartment == null)
             {
                 MessageBox.Show("You must create a Main Department, then you can add an employee.");
             }
-            else if (this.departmentsRepository.FirstDepartment.GetDirector(departmentsRepository.FirstDepartment) == null ||
-                this.departmentsRepository.FirstDepartment.GetDeputyDirector(departmentsRepository.FirstDepartment) == null ||
-                    this.departmentsRepository.FirstDepartment.Departments.Count != 0)
+            else if (DepartmentsRepository.MainDepartment.GetDirector(DepartmentsRepository.MainDepartment) == null ||
+                     DepartmentsRepository.MainDepartment.GetDeputyDirector(DepartmentsRepository.MainDepartment) == null ||
+                     DepartmentsRepository.MainDepartment.Departments.Count != 0)
             {
                 Window windowEmployeAdd = new WindowEmployeAdd(this.departmentsRepository);
                 windowEmployeAdd.Owner = this;
@@ -239,8 +235,9 @@ namespace DepartmentsRepository_WPF
         /// <param name="e"></param>
         private void HelpENG_Click(object sender, RoutedEventArgs e)
         {
-            string s = Directory.GetCurrentDirectory();
-            Process.Start("notepad.exe", "HelpENG.txt");
+            var directInfo = new DirectoryInfo(Directory.GetCurrentDirectory());
+            string combined = Path.Combine(directInfo.Parent.Parent.FullName, "HelpENG.txt");
+            Process.Start("notepad.exe", combined);
         }
 
         /// <summary>
@@ -250,8 +247,9 @@ namespace DepartmentsRepository_WPF
         /// <param name="e"></param>
         private void HelpRUS_Click(object sender, RoutedEventArgs e)
         {
-            string s = Directory.GetCurrentDirectory();
-            Process.Start("notepad.exe", "HelpRUS.txt");
+            var directInfo = new DirectoryInfo(Directory.GetCurrentDirectory());
+            string combined = Path.Combine(directInfo.Parent.Parent.FullName, "HelpRUS.txt");
+            Process.Start("notepad.exe", combined);
         }
 
         /// <summary>
@@ -261,31 +259,39 @@ namespace DepartmentsRepository_WPF
         /// <param name="e"></param>
         private void Load_Click(object sender, RoutedEventArgs e)
         {
-            if (!System.IO.File.Exists(JSON_FILE_NAME)) MessageBox.Show("You havnt file to download, first - save something.");
-            else
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = "Dialog window Json repository";
+            openFileDialog.Filter = "Json files (*.json)|*.json";
+            openFileDialog.InitialDirectory = Directory.GetCurrentDirectory();
+            //openFileDialog.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+            if (openFileDialog.ShowDialog() == true)
             {
-                string json = System.IO.File.ReadAllText(JSON_FILE_NAME);
+                string json = System.IO.File.ReadAllText(openFileDialog.FileName);
 
-                var options = new JsonSerializerOptions()
-                {
-                    ReferenceHandler = ReferenceHandler.Preserve,
-                    WriteIndented = true,
-                    Converters = {
-                        //new EmployeConverter(),
-                        //new BaseClassConverter(),
-                        new JsonStringEnumConverter() }
-                };
-                this.departmentsRepository = JsonSerializer.Deserialize<DepartmentsRepository>(json, options);
-
-                //var settings = new Newtonsoft.Json.JsonSerializerSettings
+                //var options = new JsonSerializerOptions()
                 //{
-                //    TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Objects,
-                //    Formatting = Newtonsoft.Json.Formatting.Indented,
-                //    //ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize
+                //    ReferenceHandler = ReferenceHandler.Preserve,
+                //    WriteIndented = true,
+                //    Converters = {
+                //        //new EmployeConverter(),
+                //        //new BaseClassConverter(),
+                //        new JsonStringEnumConverter() }
                 //};
-                //this.departmentsRepository = Newtonsoft.Json.JsonConvert.DeserializeObject<DepartmentsRepository>(json, settings);
+                //this.departmentsRepository = JsonSerializer.Deserialize<DepartmentsRepository>(json, options);
 
-                trvDepartments.ItemsSource = this.departmentsRepository.Departments;
+                var settings = new Newtonsoft.Json.JsonSerializerSettings
+                {
+                    TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Objects,
+                    Formatting = Newtonsoft.Json.Formatting.Indented,
+                    //ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize
+                };
+                departmentsRepository = Newtonsoft.Json.JsonConvert.DeserializeObject<DepartmentsRepository>(json, settings);
+                if (departmentsRepository.Departments.Count != 0)
+                {
+                    DepartmentsRepository.MainDepartment = departmentsRepository.Departments[0];
+                }
+
+                trvDepartments.ItemsSource = departmentsRepository.Departments;
             }
         }
 
@@ -296,38 +302,37 @@ namespace DepartmentsRepository_WPF
         /// <param name="e"></param>
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            var options = new JsonSerializerOptions()
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Title = "Dialog window Json repository";
+            saveFileDialog.Filter = "Json files (*.json)|*.json";
+            saveFileDialog.InitialDirectory = Directory.GetCurrentDirectory();
+            //openFileDialog.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+            if (saveFileDialog.ShowDialog() == true)
             {
-                ReferenceHandler = ReferenceHandler.Preserve,
-                WriteIndented = true,
-                Converters = {
-                        //new EmployeConverter(),
-                        //new BaseClassConverter(),
-                        //new TypeDiscriminatorConverter<Employe>(),
-                        new JsonStringEnumConverter() }
-            };
-            string json = JsonSerializer.Serialize<object>(this.departmentsRepository, options);
+                //var options = new JsonSerializerOptions()
+                //{
+                //    ReferenceHandler = ReferenceHandler.Preserve,
+                //    WriteIndented = true,
+                //    Converters = {
+                //            //new EmployeConverter(),
+                //            //new BaseClassConverter(),
+                //            //new TypeDiscriminatorConverter<Employe>(),
+                //            new JsonStringEnumConverter() }
+                //};
+                //string json = JsonSerializer.Serialize<object>(this.departmentsRepository, options);
 
-            //var settings = new Newtonsoft.Json.JsonSerializerSettings
-            //{
-            //    TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Objects,
-            //    Formatting = Newtonsoft.Json.Formatting.Indented,
-            //    //ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize
-            //};
-            //string json = Newtonsoft.Json.JsonConvert.SerializeObject(this.departmentsRepository, settings);
+                var settings = new Newtonsoft.Json.JsonSerializerSettings
+                {
+                    TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Objects,
+                    Formatting = Newtonsoft.Json.Formatting.Indented,
+                    //ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize
+                };
+                string json = Newtonsoft.Json.JsonConvert.SerializeObject(departmentsRepository, settings);
 
-            System.IO.File.WriteAllText(JSON_FILE_NAME, json);
-        }
+                string fileName = Path.Combine(saveFileDialog.InitialDirectory, saveFileDialog.FileName);
 
-        /// <summary>
-        /// Hint where the file with the saved message history is stored.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void PathData_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show($"If you want to do something with the saved file you must follow\n" +
-                $"{Path.Combine(Directory.GetCurrentDirectory(), JSON_FILE_NAME)}");
+                System.IO.File.WriteAllText(fileName, json);
+            }
         }
 
         /// <summary>

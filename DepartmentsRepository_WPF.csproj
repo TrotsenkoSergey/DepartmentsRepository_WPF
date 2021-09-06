@@ -92,14 +92,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AbstractClassConverter.cs" />
-    <Compile Include="BaseClassConverter.cs" />
-    <Compile Include="DateTimeConverter.cs" />
-    <Compile Include="EmployeConverter.cs" />
+    <Compile Include="JsonConverters\AbstractClassConverter.cs" />
+    <Compile Include="JsonConverters\BaseClassConverter.cs" />
+    <Compile Include="JsonConverters\DateTimeConverter.cs" />
+    <Compile Include="JsonConverters\EmployeConverter.cs" />
     <Compile Include="Employe\Attribute.cs" />
     <Compile Include="Department.cs" />
     <Compile Include="DepartmentsRepository.cs" />
-    <Compile Include="TypeDiscriminatorConverter.cs" />
+    <Compile Include="JsonConverters\TypeDiscriminatorConverter.cs" />
     <Compile Include="WindowDepartmentCreation.xaml.cs">
       <DependentUpon>WindowDepartmentCreation.xaml</DependentUpon>
     </Compile>
@@ -183,5 +183,6 @@
   <ItemGroup>
     <Resource Include="HelpENG.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

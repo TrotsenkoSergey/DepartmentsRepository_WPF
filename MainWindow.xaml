@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DepartmentsRepository_WPF"
         mc:Ignorable="d"
-        Title="DepartmentsApp" Icon="Department.png" Height="450" Width="950" WindowStartupLocation="CenterScreen">
+        Title="DepartmentsApp" Icon="Department.png" Height="500" Width="1010" WindowStartupLocation="CenterScreen">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -22,14 +22,13 @@
         <WrapPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" Margin="5 0 0 0">
             <Menu>
                 <MenuItem x:Name="Menu" Header="Menu" Height="20" Width="45" Padding="5,1,5,1" BorderBrush="Black" BorderThickness="0.1">
-                    <MenuItem x:Name="Minimize" Header="Minimize" Click="Minimize_Click"/>
+                    <MenuItem Header="Minimize" Click="Minimize_Click"/>
                     <MenuItem x:Name="Reference" Header="Reference" Click="Reference_Click"/>
-                    <MenuItem x:Name="Exit" Header ="Exit" Click="Exit_Click"/>
+                    <MenuItem Header ="Exit" Click="Exit_Click"/>
                 </MenuItem>
-                <MenuItem x:Name="File" Header="File" Height="20" Width="40" Padding="10,1,5,1" BorderBrush="Black" BorderThickness="0.1">
-                    <MenuItem Header="Save Data" Click="Save_Click"/>
-                    <MenuItem Header="Load Data" Click="Load_Click"/>
-                    <MenuItem Header="Path Data" Click="PathData_Click"/>
+                <MenuItem Header="File" Height="20" Width="40" Padding="10,1,5,1" BorderBrush="Black" BorderThickness="0.1">
+                    <MenuItem Header="Open data file" Click="Load_Click"/>
+                    <MenuItem Header="Save data to file" Click="Save_Click"/>
                 </MenuItem>
                 <MenuItem x:Name="Departments" Header="Departments" Height="20" Width="85" Padding="5,1,5,1" BorderBrush="Black" BorderThickness="0.1">
                     <MenuItem Header="Create" Click="CreateDepartment_Click"/>
@@ -69,9 +68,9 @@
                             <GridViewColumnHeader Tag="CreationTime" Click="GridViewColumnHeaderCreationTime_Click">Time of admission</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="120" DisplayMemberBinding="{Binding FullName}">
+                    <GridViewColumn Width="140" DisplayMemberBinding="{Binding FullName}">
                         <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="Name" Click="GridViewColumnHeaderName_Click">Name</GridViewColumnHeader>
+                            <GridViewColumnHeader Tag="Name" Click="GridViewColumnHeaderName_Click">Fullname</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
                     <GridViewColumn Width="80" DisplayMemberBinding="{Binding DateOfBirth, ConverterCulture='ru-RU', StringFormat={}{0:dd.MM.yyyy}}">
@@ -79,12 +78,12 @@
                             <GridViewColumnHeader Tag="DateOfBirth" Click="GridViewColumnHeaderDateOfBirth_Click">Birth Date</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="120" DisplayMemberBinding="{Binding Department.DepartmentName}">
+                    <GridViewColumn Width="120" DisplayMemberBinding="{Binding DepName}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="DepName">Department Name</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="80" DisplayMemberBinding="{Binding Attribute}">
+                    <GridViewColumn Width="120" DisplayMemberBinding="{Binding Attribute}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Attribute">Attribute</GridViewColumnHeader>
                         </GridViewColumn.Header>

@@ -19,18 +19,18 @@ namespace DepartmentsRepository_WPF
         /// <param name="attribute"></param>
         /// <param name="department"></param>
         /// <param name="firstDepartment"></param>
-        public Worker(string firstName, string lastName, DateTime dateOfBirth, EmployeAttribute attribute, Department department, Department firstDepartment)
-            : base(firstName, lastName, dateOfBirth, attribute, department, firstDepartment)
+        public Worker(string firstName, string lastName, DateTime dateOfBirth, EmployeAttribute attribute, Department department)
+            : base(firstName, lastName, dateOfBirth, attribute, department)
         {
             Department parentDepartment = department;
-            while (parentDepartment != firstDepartment) 
+            while (parentDepartment != DepartmentsRepository.MainDepartment) 
             {
                 parentDepartment.GetHeadOfDepartment(parentDepartment).Salary = default;
-                parentDepartment = parentDepartment.GetDepartmentAncestor(parentDepartment, firstDepartment);
+                parentDepartment = parentDepartment.GetDepartmentAncestor(parentDepartment, DepartmentsRepository.MainDepartment);
             }
 
-            department.GetDeputyDirector(firstDepartment).Salary = default;
-            department.GetDirector(firstDepartment).Salary = default;
+            department.GetDeputyDirector(DepartmentsRepository.MainDepartment).Salary = default;
+            department.GetDirector(DepartmentsRepository.MainDepartment).Salary = default;
         }
 
         /// <summary>

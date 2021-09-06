@@ -13,7 +13,7 @@ namespace DepartmentsRepository_WPF
         /// <summary>
         /// Main (first) department.
         /// </summary>
-        public Department FirstDepartment { get; set; }
+        public static Department MainDepartment { get; set; }
 
         /// <summary>
         /// A collection with a link to the main (first) department (for binding to a TreeView).
@@ -32,10 +32,10 @@ namespace DepartmentsRepository_WPF
         /// Creation of the first (main) department.
         /// </summary>
         /// <param name="departmentName"></param>
-        public void CreateFirstDepartment(string departmentName)
+        public void CreateMainDepartment(string departmentName)
         {
-            FirstDepartment = new Department(departmentName);
-            Departments.Add(FirstDepartment);
+            MainDepartment = new Department(departmentName);
+            Departments.Add(MainDepartment);
         }
 
         /// <summary>
@@ -51,18 +51,18 @@ namespace DepartmentsRepository_WPF
         /// <summary>
         /// Obtaining the number of employees in a specific department and its heirs.
         /// </summary>
-        /// <param name="department"></param>
+        /// <param name="ancestorDepartment"></param>
         /// <returns></returns>
-        public int GetCountOfEmployes(Department department)
+        public int GetCountOfEmployes(Department ancestorDepartment)
         {
             int count = default;
-            int length = department.Departments.Count;
+            int length = ancestorDepartment.Departments.Count;
 
             for (int i = 0; i < length; i++)
             {
-                count += GetCountOfEmployes(department.Departments[i]);
+                count += GetCountOfEmployes(ancestorDepartment.Departments[i]);
             }
-            count += department.Employes.Count;
+            count += ancestorDepartment.Employes.Count;
 
             return count;
         }
@@ -70,18 +70,20 @@ namespace DepartmentsRepository_WPF
         /// <summary>
         /// Getting a specific department by its name.
         /// </summary>
-        /// <param name="firstDepartment"></param>
+        /// <param name="ancestorDepartment"></param>
         /// <param name="departmentName"></param>
         /// <returns></returns>
-        public Department GetConcreteDepartmentByName(string departmentName, Department firstDepartment)
+        public static Department GetConcreteDepartmentByName(string departmentName, Department ancestorDepartment)
         {
-            int length = firstDepartment.Departments.Count;
+            Department department;
+            int length = ancestorDepartment.Departments.Count;
             for (int i = 0; i < length; i++)
             {
-                GetConcreteDepartmentByName(departmentName, firstDepartment.Departments[i]);
+                department = GetConcreteDepartmentByName(departmentName, ancestorDepartment.Departments[i]);
+                if (department != null) return department;
             }
 
-            return firstDepartment.DepartmentName.Contains(departmentName) ? firstDepartment : null;
+            return ancestorDepartment.DepartmentName.Contains(departmentName) ? ancestorDepartment : null;
         }
 
         /// <summary>
