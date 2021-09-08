@@ -15,12 +15,12 @@ namespace DepartmentsRepository_WPF
     {
 
         private string departmentName;
-        private ObservableCollection<Employe> employes;
+        private ObservableCollection<Employee> employes;
         private ObservableCollection<Department> departments;
        
         public Department()
         {
-            this.employes = new ObservableCollection<Employe>();
+            this.employes = new ObservableCollection<Employee>();
             this.Departments = new ObservableCollection<Department>();
         }
 
@@ -39,7 +39,7 @@ namespace DepartmentsRepository_WPF
             {
                 this.departmentName = value;
                 if (Employes.Count != 0)
-                    foreach (Employe employe in Employes)
+                    foreach (Employee employe in Employes)
                     {
                         employe.DepName = DepartmentName;
                     }
@@ -50,7 +50,7 @@ namespace DepartmentsRepository_WPF
         /// <summary>
         /// Department employees.
         /// </summary>
-        public ObservableCollection<Employe> Employes
+        public ObservableCollection<Employee> Employes
         {
             get => this.employes;
             set
@@ -104,10 +104,10 @@ namespace DepartmentsRepository_WPF
         /// <summary>
         /// Removes a specific worker from the list.
         /// </summary>
-        /// <param name="concreteEmploye"></param>
-        public void RemoveEmploye(Employe concreteEmploye)
+        /// <param name="concreteEmployee"></param>
+        public void RemoveEmploye(Employee concreteEmployee)
         {
-            Employes.Remove(concreteEmploye);
+            Employes.Remove(concreteEmployee);
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace DepartmentsRepository_WPF
         /// <returns></returns>
         public Manager GetDirector(Department firstDepartment)
         {
-            foreach (Employe employe in firstDepartment.Employes)
+            foreach (Employee employe in firstDepartment.Employes)
             {
                 if (employe.Attribute == EmployeAttribute.Director)
                 { return employe as Manager; }
@@ -132,7 +132,7 @@ namespace DepartmentsRepository_WPF
         /// <returns></returns>
         public Manager GetDeputyDirector(Department firstDepartment)
         {
-            foreach (Employe employe in firstDepartment.Employes)
+            foreach (Employee employe in firstDepartment.Employes)
             {
                 if (employe.Attribute == EmployeAttribute.Deputy_Director)
                 { return employe as Manager; }
@@ -147,7 +147,7 @@ namespace DepartmentsRepository_WPF
         /// <returns></returns>
         public Manager GetHeadOfDepartment(Department department)
         {
-            foreach (Employe employe in department.Employes)
+            foreach (Employee employe in department.Employes)
             {
                 if (employe.Attribute == EmployeAttribute.Head_Of_Department)
                 { return employe as Manager; }
@@ -209,7 +209,7 @@ namespace DepartmentsRepository_WPF
         /// <param name="department"></param>
         public void SortEmployeByLastName(Department department)
         {
-            department.Employes = new ObservableCollection<Employe>(department.Employes.OrderBy(x => x.LastName));
+            department.Employes = new ObservableCollection<Employee>(department.Employes.OrderBy(x => x.LastName));
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace DepartmentsRepository_WPF
         /// <param name="department"></param>
         public void SortEmployeBySalary(Department department)
         {
-            department.Employes = new ObservableCollection<Employe>(department.Employes.OrderBy(x => x.Salary));
+            department.Employes = new ObservableCollection<Employee>(department.Employes.OrderBy(x => x.Salary));
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace DepartmentsRepository_WPF
         /// <param name="department"></param>
         public void SortEmployeByDateOfBirth(Department department)
         {
-            department.Employes = new ObservableCollection<Employe>(department.Employes.OrderBy(x => x.DateOfBirth));
+            department.Employes = new ObservableCollection<Employee>(department.Employes.OrderBy(x => x.DateOfBirth));
         }
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace DepartmentsRepository_WPF
         /// <param name="department"></param>
         public void SortEmployeByCreationTime(Department department)
         {
-            department.Employes = new ObservableCollection<Employe>(department.Employes.OrderBy(x => x.CreationTime));
+            department.Employes = new ObservableCollection<Employee>(department.Employes.OrderBy(x => x.CreationTime));
         }
 
         // below, interface INotifyPropertyChanged implementation 

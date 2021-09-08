@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace DepartmentsRepository_WPF
 {
-    public class Manager : Employe
+    public class Manager : Employee
     {
         private const double DIRECTOR_SALARY_RATIO = 0.15;
         private const double DIRECTOR_MIN_SALARY = 3000;

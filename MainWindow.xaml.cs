@@ -193,9 +193,9 @@ namespace DepartmentsRepository_WPF
         /// <param name="e"></param>
         private void RenameEmploye_Click(object sender, RoutedEventArgs e)
         {
-            if (lvEmployes.SelectedItem is Employe)
+            if (lvEmployes.SelectedItem is Employee)
             {
-                Window windowEmployeRename = new WindowEmployeRename(lvEmployes.SelectedItem as Employe);
+                Window windowEmployeRename = new WindowEmployeRename(lvEmployes.SelectedItem as Employee);
                 windowEmployeRename.Owner = this;
                 windowEmployeRename.ShowDialog();
             }
@@ -212,14 +212,14 @@ namespace DepartmentsRepository_WPF
         /// <param name="e"></param>
         private void RemoveEmploye_Click(object sender, RoutedEventArgs e)
         {
-            if (lvEmployes.SelectedItem is Employe)
+            if (lvEmployes.SelectedItem is Employee)
             {
-                MessageBoxResult messageBoxResult = MessageBox.Show($"Are you sure to remove '{(lvEmployes.SelectedItem as Employe).FullName}' employe?",
+                MessageBoxResult messageBoxResult = MessageBox.Show($"Are you sure to remove '{(lvEmployes.SelectedItem as Employee).FullName}' employe?",
                     "Warning message", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
-                    (trvDepartments.SelectedItem as Department).RemoveEmploye(lvEmployes.SelectedItem as Employe);
+                    (trvDepartments.SelectedItem as Department).RemoveEmploye(lvEmployes.SelectedItem as Employee);
                 }
             }
             else

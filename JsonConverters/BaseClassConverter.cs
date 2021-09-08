@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DepartmentsRepository_WPF
 {
-    public class BaseClassConverter : JsonConverter<Employe>
+    public class BaseClassConverter : JsonConverter<Employee>
     {
         private enum TypeDiscriminator
         {
@@ -19,10 +19,10 @@ namespace DepartmentsRepository_WPF
 
         public override bool CanConvert(Type type)
         {
-            return typeof(Employe) == type;
+            return typeof(Employee) == type;
         }
 
-        public override Employe Read(
+        public override Employee Read(
             ref Utf8JsonReader reader,
             Type typeToConvert,
             JsonSerializerOptions options)
@@ -44,7 +44,7 @@ namespace DepartmentsRepository_WPF
                 throw new JsonException();
             }
 
-            Employe baseClass;
+            Employee baseClass;
             TypeDiscriminator typeDiscriminator = (TypeDiscriminator)reader.GetInt32();
             switch (typeDiscriminator)
             {
@@ -79,7 +79,7 @@ namespace DepartmentsRepository_WPF
                     {
                         throw new JsonException();
                     }
-                    baseClass = (Employe)JsonSerializer.Deserialize(ref reader, typeof(Employe));
+                    baseClass = (Employee)JsonSerializer.Deserialize(ref reader, typeof(Employee));
                     break;
                 default:
                     throw new NotSupportedException();
@@ -95,7 +95,7 @@ namespace DepartmentsRepository_WPF
 
         public override void Write(
             Utf8JsonWriter writer,
-            Employe value,
+            Employee value,
             JsonSerializerOptions options)
         {
             writer.WriteStartObject();
@@ -112,7 +112,7 @@ namespace DepartmentsRepository_WPF
                 writer.WritePropertyName("TypeValue");
                 JsonSerializer.Serialize(writer, worker, options);
             }
-            else if (value is Employe baseClass)
+            else if (value is Employee baseClass)
             {
                 writer.WriteNumber("TypeDiscriminator", (int)TypeDiscriminator.Employe);
                 writer.WritePropertyName("TypeValue");

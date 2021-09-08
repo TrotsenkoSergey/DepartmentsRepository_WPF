@@ -8,7 +8,7 @@ namespace DepartmentsRepository_WPF
     /// <summary>
     ///     Employe entity abstract class.
     /// </summary>
-    public abstract class Employe : INotifyPropertyChanged // the specified interface gives us the ability
+    public abstract class Employee : INotifyPropertyChanged // the specified interface gives us the ability
                                                            // to change the values ​​of the ListView.Item property       
     {
         private protected DateTime dateOfBirth;
@@ -17,7 +17,7 @@ namespace DepartmentsRepository_WPF
         private protected string depName;
         private protected double salary;
 
-        public Employe()
+        public Employee()
         {
         }
 
@@ -30,7 +30,7 @@ namespace DepartmentsRepository_WPF
         /// <param name="attribute"></param>
         /// <param name="department"></param>
         /// <param name="firstDepartment"></param>
-        private protected Employe(string firstName, string lastName, DateTime dateOfBirth, EmployeAttribute attribute,
+        private protected Employee(string firstName, string lastName, DateTime dateOfBirth, EmployeAttribute attribute,
             Department department)
         {
             CreationTime = DateTime.Now;

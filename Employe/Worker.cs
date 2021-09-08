@@ -2,7 +2,7 @@
 
 namespace DepartmentsRepository_WPF
 {
-    public class Worker : Employe
+    public class Worker : Employee
     {
 
         private const double SALARY_WORKER_PER_HOUR = 12;

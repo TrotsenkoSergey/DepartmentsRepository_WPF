@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DepartmentsRepository_WPF
 {
-    public class EmployeConverter : JsonConverter<Employe>
+    public class EmployeConverter : JsonConverter<Employee>
     {
 
         enum TypeDiscriminator
@@ -18,9 +18,9 @@ namespace DepartmentsRepository_WPF
         }
 
         public override bool CanConvert(Type typeToConvert) =>
-            typeof(Employe).IsAssignableFrom(typeToConvert);
+            typeof(Employee).IsAssignableFrom(typeToConvert);
 
-        public override Employe Read(
+        public override Employee Read(
             ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType != JsonTokenType.StartObject)
@@ -47,14 +47,14 @@ namespace DepartmentsRepository_WPF
             }
 
             TypeDiscriminator typeDiscriminator = (TypeDiscriminator)reader.GetInt32();
-            Employe employe;
+            Employee employee;
             switch (typeDiscriminator)
             {
                 case TypeDiscriminator.Manager:
-                    employe = new Manager();
+                    employee = new Manager();
                     break;
                 case TypeDiscriminator.Worker:
-                    employe = new Worker();
+                    employee = new Worker();
                     break;
                 default:
                     throw new JsonException();
@@ -64,7 +64,7 @@ namespace DepartmentsRepository_WPF
             {
                 if (reader.TokenType == JsonTokenType.EndObject)
                 {
-                    return employe;
+                    return employee;
                 }
 
                 if (reader.TokenType == JsonTokenType.PropertyName)
@@ -75,19 +75,19 @@ namespace DepartmentsRepository_WPF
                     {
                         case "CreationTime":
                             DateTime creationTime = reader.GetDateTime();
-                            employe.CreationTime = creationTime;
+                            employee.CreationTime = creationTime;
                             break;
                         case "FirstName":
                             string firstName = reader.GetString();
-                            employe.FirstName = firstName;
+                            employee.FirstName = firstName;
                             break;
                         case "LastName":
                             string lastName = reader.GetString();
-                            employe.LastName = lastName;
+                            employee.LastName = lastName;
                             break;
                         case "DateOfBirth":
                             DateTime dateOfBirth = reader.GetDateTime();
-                            employe.DateOfBirth = dateOfBirth;
+                            employee.DateOfBirth = dateOfBirth;
                             break;
                         case "Department":
                             //var department = reader.Get
@@ -96,11 +96,11 @@ namespace DepartmentsRepository_WPF
                             //break;
                         case "Salary":
                             double salary = reader.GetDouble();
-                            employe.Salary = salary;
+                            employee.Salary = salary;
                             break;
                         case "Attribute":
                             EmployeAttribute attribute = (EmployeAttribute)reader.GetInt32();
-                            employe.Attribute = attribute;
+                            employee.Attribute = attribute;
                             break;
                     }
                 }
@@ -110,16 +110,16 @@ namespace DepartmentsRepository_WPF
         }
 
         public override void Write(
-            Utf8JsonWriter writer, Employe employe, JsonSerializerOptions options)
+            Utf8JsonWriter writer, Employee employee, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
 
-            if (employe is Manager manager)
+            if (employee is Manager manager)
             {
                 writer.WriteNumber("TypeDiscriminator", (int)TypeDiscriminator.Manager);
                 //writer.WriteNumber("CreditLimit", manager.CreditLimit);
             }
-            else if (employe is Worker worker)
+            else if (employee is Worker worker)
             {
                 writer.WriteNumber("TypeDiscriminator", (int)TypeDiscriminator.Worker);
                 //writer.WriteString("OfficeNumber", worker.OfficeNumber);

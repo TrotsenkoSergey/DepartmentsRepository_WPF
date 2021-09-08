@@ -20,12 +20,12 @@ namespace DepartmentsRepository_WPF
     public partial class WindowEmployeRename : Window
     {
 
-        private readonly Employe employe;
+        private readonly Employee employee;
 
-        public WindowEmployeRename(Employe employe)
+        public WindowEmployeRename(Employee employee)
         {
             InitializeComponent();
-            this.employe = employe;
+            this.employee = employee;
         }
 
         private void Rename_Button_Click(object sender, RoutedEventArgs e)
@@ -33,8 +33,8 @@ namespace DepartmentsRepository_WPF
             if (DepartmentsRepository.IsCorrectName(tbEmployeFirstName.Text, out string error) &
                 DepartmentsRepository.IsCorrectName(tbEmployeLastName.Text, out string error2))
             {
-                employe.FirstName = tbEmployeFirstName.Text;
-                employe.LastName = tbEmployeLastName.Text;
+                employee.FirstName = tbEmployeFirstName.Text;
+                employee.LastName = tbEmployeLastName.Text;
                 Close();
             }
             else MessageBox.Show($"Firstname {error}, lastname {error2}");
